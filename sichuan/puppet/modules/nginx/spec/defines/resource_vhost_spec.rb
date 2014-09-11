@@ -50,6 +50,30 @@ describe 'nginx::resource::vhost' do
     describe "vhost_header template content" do
       [
         {
+<<<<<<< HEAD
+=======
+          :title    => 'should not contain www to non-www rewrite',
+          :attr     => 'rewrite_www_to_non_www',
+          :value    => false,
+          :notmatch => %r|
+            ^
+            \s+listen\s+\*:443\s+ssl;\n
+            \s+server_name\s+www\.rspec\.example\.com;\n
+            \s+return\s+301\s+https://rspec\.example\.com\$uri;
+          |x,
+        },
+        {
+          :title => 'should contain www to non-www rewrite',
+          :attr  => 'rewrite_www_to_non_www',
+          :value => true,
+          :match => [
+            '  listen       *:80;',
+            '  server_name  www.rspec.example.com;',
+            '  return       301 http://rspec.example.com$uri;',
+          ],
+        },
+        {
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
           :title => 'should set the IPv4 listen IP',
           :attr  => 'listen_ip',
           :value => '127.0.0.1',
@@ -100,8 +124,13 @@ describe 'nginx::resource::vhost' do
         {
           :title => 'should set servername(s)',
           :attr  => 'server_name',
+<<<<<<< HEAD
           :value => ['name1','name2'],
           :match => '  server_name           name1 name2;',
+=======
+          :value => ['www.foo.com','foo.com'],
+          :match => '  server_name           www.foo.com foo.com;',
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
         },
         {
           :title => 'should rewrite www servername to non-www',
@@ -128,6 +157,37 @@ describe 'nginx::resource::vhost' do
           :match => '  auth_basic_user_file value;',
         },
         {
+<<<<<<< HEAD
+=======
+          :title => 'should set the client_body_timeout',
+          :attr  => 'client_body_timeout',
+          :value => 'value',
+          :match => /^[ ]+client_body_timeout\s+value;/
+        },
+        {
+          :title => 'should set the client_header_timeout',
+          :attr  => 'client_header_timeout',
+          :value => 'value',
+          :match => /^[ ]+client_header_timeout\s+value;/
+        },
+        {
+          :title => 'should set the gzip_types',
+          :attr  => 'gzip_types',
+          :value => 'value',
+          :match => /^[ ]+gzip_types\s+value;/
+        },
+        {
+          :title => 'should contain raw_prepend directives',
+          :attr  => 'raw_prepend',
+          :value => [
+            'if (a) {',
+            '  b;',
+            '}'
+          ],
+          :match => /^\s+if \(a\) {\n\s++b;\n\s+\}/,
+        },
+        {
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
           :title => 'should contain ordered prepended directives',
           :attr  => 'vhost_cfg_prepend',
           :value => { 'test1' => ['test value 1a', 'test value 1b'], 'test2' => 'test value 2', 'allow' => 'test value 3' },
@@ -195,8 +255,19 @@ describe 'nginx::resource::vhost' do
 
           it { should contain_concat__fragment("#{title}-header") }
           it param[:title] do
+<<<<<<< HEAD
             lines = subject.resource('concat::fragment', "#{title}-header").send(:parameters)[:content].split("\n")
             (lines & Array(param[:match])).should == Array(param[:match])
+=======
+            matches  = Array(param[:match])
+
+            if matches.all? { |m| m.is_a? Regexp }
+              matches.each { |item| should contain_concat__fragment("#{title}-header").with_content(item) }
+            else
+              lines = subject.resource('concat::fragment', "#{title}-header").send(:parameters)[:content].split("\n")
+              (lines & Array(param[:match])).should == Array(param[:match])
+            end
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
             Array(param[:notmatch]).each do |item|
               should contain_concat__fragment("#{title}-header").without_content(item)
             end
@@ -208,12 +279,31 @@ describe 'nginx::resource::vhost' do
     describe "vhost_footer template content" do
       [
         {
+<<<<<<< HEAD
+=======
+          :title    => 'should not contain www to non-www rewrite',
+          :attr     => 'rewrite_www_to_non_www',
+          :value    => false,
+          :notmatch => %r|
+            ^
+            \s+listen\s+\*:443\s+ssl;\n
+            \s+server_name\s+www\.rspec\.example\.com;\n
+            \s+return\s+301\s+https://rspec\.example\.com\$uri;
+          |x,
+        },
+        {
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
           :title => 'should contain include directives',
           :attr  => 'include_files',
           :value => [ '/file1', '/file2' ],
           :match => [
+<<<<<<< HEAD
             'include /file1;',
             'include /file2;',
+=======
+            %r'^[ ]+include\s+/file1;',
+            %r'^[ ]+include\s+/file2;',
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
           ],
         },
         {
@@ -228,6 +318,7 @@ describe 'nginx::resource::vhost' do
           ],
         },
         {
+<<<<<<< HEAD
           :title => 'should contain www to non-www rewrite',
           :attr  => 'rewrite_www_to_non_www',
           :value => true,
@@ -246,6 +337,16 @@ describe 'nginx::resource::vhost' do
             /  server_name           www\.rspec\.example\.com;/,
             /  rewrite               \^ http:\/\/rspec\.example\.com\$uri permanent;/,
           ],
+=======
+          :title => 'should contain raw_append directives',
+          :attr  => 'raw_append',
+          :value => [
+            'if (a) {',
+            '  b;',
+            '}'
+          ],
+          :match => /^\s+if \(a\) {\n\s++b;\n\s+\}/,
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
         },
       ].each do |param|
         context "when #{param[:attr]} is #{param[:value]}" do
@@ -253,8 +354,19 @@ describe 'nginx::resource::vhost' do
 
           it { should contain_concat__fragment("#{title}-footer") }
           it param[:title] do
+<<<<<<< HEAD
             lines = subject.resource('concat::fragment', "#{title}-footer").send(:parameters)[:content].split("\n")
             (lines & Array(param[:match])).should == Array(param[:match])
+=======
+            matches  = Array(param[:match])
+
+            if matches.all? { |m| m.is_a? Regexp }
+              matches.each { |item| should contain_concat__fragment("#{title}-footer").with_content(item) }
+            else
+              lines  = subject.resource('concat::fragment', "#{title}-footer").send(:parameters)[:content].split("\n")
+              (lines & Array(param[:match])).should == Array(param[:match])
+            end
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
             Array(param[:notmatch]).each do |item|
               should contain_concat__fragment("#{title}-footer").without_content(item)
             end
@@ -266,6 +378,30 @@ describe 'nginx::resource::vhost' do
     describe "vhost_ssl_header template content" do
       [
         {
+<<<<<<< HEAD
+=======
+          :title    => 'should not contain www to non-www rewrite',
+          :attr     => 'rewrite_www_to_non_www',
+          :value    => false,
+          :notmatch => %r|
+            ^
+            \s+listen\s+\*:443\s+ssl;\n
+            \s+server_name\s+www\.rspec\.example\.com;\n
+            \s+return\s+301\s+https://rspec\.example\.com\$uri;
+          |x,
+        },
+        {
+          :title => 'should contain www to non-www rewrite',
+          :attr  => 'rewrite_www_to_non_www',
+          :value => true,
+          :match => [
+            '  listen       *:443 ssl;',
+            '  server_name  www.rspec.example.com;',
+            '  return       301 https://rspec.example.com$uri;',
+          ],
+        },
+        {
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
           :title => 'should set the IPv4 listen IP',
           :attr  => 'listen_ip',
           :value => '127.0.0.1',
@@ -328,8 +464,13 @@ describe 'nginx::resource::vhost' do
         {
           :title => 'should set servername(s)',
           :attr  => 'server_name',
+<<<<<<< HEAD
           :value => ['name1','name2'],
           :match => '  server_name  name1 name2;',
+=======
+          :value => ['www.foo.com','foo.com'],
+          :match => '  server_name  www.foo.com foo.com;',
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
         },
         {
           :title => 'should rewrite www servername to non-www',
@@ -374,6 +515,27 @@ describe 'nginx::resource::vhost' do
           :match => '  auth_basic_user_file      "value";',
         },
         {
+<<<<<<< HEAD
+=======
+          :title => 'should set the client_body_timeout',
+          :attr  => 'client_body_timeout',
+          :value => 'value',
+          :match => /^[ ]+client_body_timeout\s+value;/
+        },
+        {
+          :title => 'should set the client_header_timeout',
+          :attr  => 'client_header_timeout',
+          :value => 'value',
+          :match => /^[ ]+client_header_timeout\s+value;/
+        },
+        {
+          :title => 'should set the gzip_types',
+          :attr  => 'gzip_types',
+          :value => 'value',
+          :match => /^[ ]+gzip_types\s+value;/
+        },
+        {
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
           :title => 'should set access_log',
           :attr  => 'access_log',
           :value => '/path/to/access.log',
@@ -386,6 +548,19 @@ describe 'nginx::resource::vhost' do
           :match => '  error_log             /path/to/error.log;',
         },
         {
+<<<<<<< HEAD
+=======
+          :title => 'should contain raw_prepend directives',
+          :attr  => 'raw_prepend',
+          :value => [
+            'if (a) {',
+            '  b;',
+            '}'
+          ],
+          :match => /^\s+if \(a\) {\n\s++b;\n\s+\}/,
+        },
+        {
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
           :title => 'should contain ordered prepend directives',
           :attr  => 'vhost_cfg_prepend',
           :value => { 'test1' => 'test value 1', 'test2' => ['test value 2a', 'test value 2b'], 'allow' => 'test value 3' },
@@ -429,8 +604,19 @@ describe 'nginx::resource::vhost' do
           }) end
           it { should contain_concat__fragment("#{title}-ssl-header") }
           it param[:title] do
+<<<<<<< HEAD
             lines = subject.resource('concat::fragment', "#{title}-ssl-header").send(:parameters)[:content].split("\n")
             (lines & Array(param[:match])).should == Array(param[:match])
+=======
+            matches  = Array(param[:match])
+
+            if matches.all? { |m| m.is_a? Regexp }
+              matches.each { |item| should contain_concat__fragment("#{title}-ssl-header").with_content(item) }
+            else
+              lines = subject.resource('concat::fragment', "#{title}-ssl-header").send(:parameters)[:content].split("\n")
+              (lines & Array(param[:match])).should == Array(param[:match])
+            end
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
             Array(param[:notmatch]).each do |item|
               should contain_concat__fragment("#{title}-ssl-header").without_content(item)
             end
@@ -442,12 +628,31 @@ describe 'nginx::resource::vhost' do
     describe "vhost_ssl_footer template content" do
       [
         {
+<<<<<<< HEAD
+=======
+          :title    => 'should not contain www to non-www rewrite',
+          :attr     => 'rewrite_www_to_non_www',
+          :value    => false,
+          :notmatch => %r|
+            ^
+            \s+listen\s+\*:443\s+ssl;\n
+            \s+server_name\s+www\.rspec\.example\.com;\n
+            \s+return\s+301\s+https://rspec\.example\.com\$uri;
+          |x,
+        },
+        {
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
           :title => 'should contain include directives',
           :attr  => 'include_files',
           :value => [ '/file1', '/file2' ],
           :match => [
+<<<<<<< HEAD
             'include /file1;',
             'include /file2;',
+=======
+            %r'^[ ]+include\s+/file1;',
+            %r'^[ ]+include\s+/file2;',
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
           ],
         },
         {
@@ -461,6 +666,19 @@ describe 'nginx::resource::vhost' do
           ]
         },
         {
+<<<<<<< HEAD
+=======
+          :title => 'should contain raw_append directives',
+          :attr  => 'raw_append',
+          :value => [
+            'if (a) {',
+            '  b;',
+            '}'
+          ],
+          :match => /^\s+if \(a\) {\n\s++b;\n\s+\}/,
+        },
+        {
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
           :title => 'should contain ordered ssl appended directives',
           :attr  => 'vhost_cfg_ssl_append',
           :value => { 'test1' => 'test value 1', 'test2' => ['test value 2a', 'test value 2b'], 'allow' => 'test value 3' },
@@ -471,6 +689,7 @@ describe 'nginx::resource::vhost' do
             '  test2 test value 2b;',
           ]
         },
+<<<<<<< HEAD
         {
           :title => 'should contain www to non-www rewrite',
           :attr  => 'rewrite_www_to_non_www',
@@ -491,6 +710,8 @@ describe 'nginx::resource::vhost' do
             /  rewrite               \^ https:\/\/rspec\.example\.com\$uri permanent;/,
           ],
         },
+=======
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
       ].each do |param|
         context "when #{param[:attr]} is #{param[:value]}" do
           let :params do default_params.merge({
@@ -502,8 +723,19 @@ describe 'nginx::resource::vhost' do
 
           it { should contain_concat__fragment("#{title}-ssl-footer") }
           it param[:title] do
+<<<<<<< HEAD
             lines = subject.resource('concat::fragment', "#{title}-ssl-footer").send(:parameters)[:content].split("\n")
             (lines & Array(param[:match])).should == Array(param[:match])
+=======
+            matches  = Array(param[:match])
+
+            if matches.all? { |m| m.is_a? Regexp }
+              matches.each { |item| should contain_concat__fragment("#{title}-ssl-footer").with_content(item) }
+            else
+              lines = subject.resource('concat::fragment', "#{title}-ssl-footer").send(:parameters)[:content].split("\n")
+              (lines & Array(param[:match])).should == Array(param[:match])
+            end
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
             Array(param[:notmatch]).each do |item|
               should contain_concat__fragment("#{title}-ssl-footer").without_content(item)
             end
@@ -511,17 +743,63 @@ describe 'nginx::resource::vhost' do
         end
       end
     end
+<<<<<<< HEAD
     context 'attribute resources' do
       context "SSL cert missing" do
         let(:params) {{ :ssl => true, :ssl_key => 'key' }}
 
         it { expect { should contain_class('nginx::resource::vhost') }.to raise_error(Puppet::Error, %r{nginx: SSL certificate/key \(ssl_cert/ssl_cert\) and/or SSL Private must be defined and exist on the target system\(s\)}) }
+=======
+
+    context 'attribute resources' do
+      context "with SSL enabled, www rewrite to naked domain with multiple server_names" do
+        let :title do 'foo.com' end
+        let(:params) do
+          {
+            :ssl                    => true,
+            :ssl_cert               => 'cert',
+            :ssl_key                => 'key',
+            :server_name            => %w(www.foo.com bar.foo.com foo.com),
+            :use_default_location   => false,
+            :rewrite_www_to_non_www => true,
+          }
+        end
+
+        it "should set the server_name of the rewrite server stanza to the first server_name with 'www.' stripped" do
+          should contain_concat__fragment("#{title}-ssl-header").with_content(/^[ ]+server_name\s+foo.com;/)
+        end
+      end
+
+      context "with SSL disabled, www rewrite to naked domain with multiple server_names" do
+        let :title do 'foo.com' end
+        let(:params) do
+          {
+            :server_name            => %w(www.foo.com bar.foo.com foo.com),
+            :use_default_location   => false,
+            :rewrite_www_to_non_www => true,
+          }
+        end
+
+        it "should set the server_name of the rewrite server stanza to the first server_name with 'www.' stripped" do
+          should contain_concat__fragment("#{title}-header").with_content(/^[ ]+server_name\s+foo.com;/)
+        end
+      end
+
+      context "SSL cert missing" do
+        let(:params) {{ :ssl => true, :ssl_key => 'key' }}
+
+        it { expect { should contain_class('nginx::resource::vhost') }.to raise_error(Puppet::Error) }
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
       end
 
       context "SSL key missing" do
         let(:params) {{ :ssl => true, :ssl_cert => 'cert' }}
 
+<<<<<<< HEAD
         it { expect { should contain_class('nginx::resource::vhost') }.to raise_error(Puppet::Error, %r{nginx: SSL certificate/key \(ssl_cert/ssl_cert\) and/or SSL Private must be defined and exist on the target system\(s\)}) }
+=======
+        it { expect { should contain_class('nginx::resource::vhost') }.to raise_error(Puppet::Error) }
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
       end
 
       context 'when use_default_location => true' do
@@ -548,6 +826,25 @@ describe 'nginx::resource::vhost' do
         it { should contain_nginx__resource__location("#{title}-default").with_location_cfg_prepend({ 'key' => 'value' }) }
       end
 
+<<<<<<< HEAD
+=======
+      context "when location_raw_prepend => [ 'foo;' ]" do
+        let :params do default_params.merge({
+          :location_raw_prepend => [ 'foo;' ],
+        }) end
+
+        it { should contain_nginx__resource__location("#{title}-default").with_raw_prepend([ 'foo;' ]) }
+      end
+
+      context "when location_raw_append => [ 'foo;' ]" do
+        let :params do default_params.merge({
+          :location_raw_append => [ 'foo;' ],
+        }) end
+
+        it { should contain_nginx__resource__location("#{title}-default").with_raw_append([ 'foo;' ]) }
+      end
+
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
       context 'when location_cfg_append => { key => value }' do
         let :params do default_params.merge({
           :location_cfg_append => { 'key' => 'value' },

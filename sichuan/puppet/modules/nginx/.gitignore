@@ -6,3 +6,7 @@ pkg/
 pkg/
 Gemfile.lock
 spec/fixtures/
+<<<<<<< HEAD
+=======
+/metadata.json
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290

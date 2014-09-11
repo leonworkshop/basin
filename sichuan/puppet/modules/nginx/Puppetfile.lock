@@ -3,11 +3,20 @@ FORGE
   specs:
     puppetlabs/apt (1.2.0)
       puppetlabs/stdlib (>= 2.2.1)
+<<<<<<< HEAD
     puppetlabs/concat (1.0.0)
+=======
+    puppetlabs/concat (1.1.0)
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
     puppetlabs/stdlib (4.1.0)
 
 DEPENDENCIES
   puppetlabs/apt (>= 1.0.0)
+<<<<<<< HEAD
   puppetlabs/concat (>= 1.0.0)
   puppetlabs/stdlib (>= 0.1.6)
+=======
+  puppetlabs/concat (>= 1.1.0)
+  puppetlabs/stdlib (>= 3.0.0)
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
 

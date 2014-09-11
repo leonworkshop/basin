@@ -20,7 +20,10 @@ class nginx::package::debian(
     $package_ensure = 'present'
   ) {
 
+<<<<<<< HEAD
   
+=======
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
   $distro = downcase($::operatingsystem)
 
   package { $package_name:
@@ -30,9 +33,15 @@ class nginx::package::debian(
 
   anchor { 'nginx::apt_repo' : }
 
+<<<<<<< HEAD
   include '::apt'
 
   if $manage_repo {
+=======
+  if $manage_repo {
+    include '::apt'
+
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
     case $package_source {
       'nginx': {
         apt::source { 'nginx':

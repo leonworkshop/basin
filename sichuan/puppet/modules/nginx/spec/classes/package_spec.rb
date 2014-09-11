@@ -87,6 +87,7 @@ describe 'nginx::package' do
   shared_examples 'suse' do |operatingsystem|
     let(:facts) {{ :operatingsystem => operatingsystem, :osfamily => 'Suse'}}
     [
+<<<<<<< HEAD
       'nginx-0.8',
       'apache2',
       'apache2-itk',
@@ -105,6 +106,9 @@ describe 'nginx::package' do
       'rubygem-rack',
       'rubygem-rake',
       'rubygem-spruz',
+=======
+      'nginx',
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
     ].each do |package|
       it { should contain_package("#{package}") }
     end

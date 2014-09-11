@@ -15,6 +15,7 @@
 # Sample Usage:
 #
 # This class file is not called directly
+<<<<<<< HEAD
 class nginx::package::suse {
 
   $suse_packages = [
@@ -25,6 +26,17 @@ class nginx::package::suse {
   ]
 
   package { $suse_packages:
+=======
+class nginx::package::suse (
+  $package_name = 'nginx'
+) {
+
+  if $caller_module_name != $module_name {
+    warning("${name} is deprecated as a public API of the ${module_name} module and should no longer be directly included in the manifest.")
+  }
+
+  package { $package_name:
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
     ensure => $nginx::package_ensure,
   }
 }

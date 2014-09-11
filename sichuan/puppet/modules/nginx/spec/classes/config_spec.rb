@@ -204,7 +204,11 @@ describe 'nginx::config' do
           :notmatch => /  proxy_cache_path    \/path\/to\/proxy\.cache levels=1 keys_zone=d2:100m max_size=500m inactive=20m;/,
         },
         {
+<<<<<<< HEAD
           :title => 'should contain ordered appended directives',
+=======
+          :title => 'should contain ordered appended directives from hash',
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
           :attr  => 'http_cfg_append',
           :value => { 'test1' => 'test value 1', 'test2' => 'test value 2', 'allow' => 'test value 3' },
           :match => [
@@ -213,6 +217,42 @@ describe 'nginx::config' do
             '  test2 test value 2;',
           ],
         },
+<<<<<<< HEAD
+=======
+        {
+          :title => 'should contain duplicate appended directives from list of hashes',
+          :attr  => 'http_cfg_append',
+          :value => [[ 'allow', 'test value 1'], ['allow', 'test value 2' ]],
+          :match => [
+            '  allow test value 1;',
+            '  allow test value 2;',
+          ],
+        },
+        {
+            :title => 'should set pid',
+            :attr  => 'pid',
+            :value => '/path/to/pid',
+            :match => 'pid        /path/to/pid;',
+        },
+        {
+            :title => 'should set tcp_nodelay',
+            :attr  => 'http_tcp_nodelay',
+            :value => 'on',
+            :match => '  tcp_nodelay        on;',
+        },
+        {
+            :title => 'should set tcp_nopush',
+            :attr  => 'http_tcp_nopush',
+            :value => 'on',
+            :match => '  tcp_nopush on;',
+        },
+        {
+            :title => 'should set keepalive_timeout',
+            :attr  => 'keepalive_timeout',
+            :value => '123',
+            :match => '  keepalive_timeout  123;',
+        },
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
       ].each do |param|
         context "when #{param[:attr]} is #{param[:value]}" do
           let :params do { param[:attr].to_sym => param[:value] } end
@@ -231,12 +271,15 @@ describe 'nginx::config' do
     describe "proxy.conf template content" do
       [
         {
+<<<<<<< HEAD
           :title => 'should set client_max_body_size',
           :attr  => 'client_max_body_size',
           :value => '5m',
           :match => 'client_max_body_size      5m;',
         },
         {
+=======
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
           :title => 'should set proxy_buffers',
           :attr  => 'proxy_buffers',
           :value => '50 5k',
@@ -263,6 +306,21 @@ describe 'nginx::config' do
             'proxy_set_header        header2;',
           ],
         },
+<<<<<<< HEAD
+=======
+        {
+            :title    => 'should set client_body_temp_path',
+            :attr     => 'client_body_temp_path',
+            :value    => '/path/to/body_temp',
+            :match => 'client_body_temp_path   /path/to/body_temp;',
+        },
+        {
+            :title    => 'should set proxy_temp_path',
+            :attr     => 'proxy_temp_path',
+            :value    => '/path/to/proxy_temp',
+            :match => 'proxy_temp_path         /path/to/proxy_temp;',
+        },
+>>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
       ].each do |param|
         context "when #{param[:attr]} is #{param[:value]}" do
           let :params do { param[:attr].to_sym => param[:value] } end

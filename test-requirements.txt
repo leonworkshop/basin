@@ -1,0 +1,20 @@
+# logstream ci test dependency requirements
+hacking>=0.9.1,<0.10
+cliff>=1.6.0
+coverage>=3.6
+django-nose
+docutils==0.9.1
+fixtures>=0.3.14
+mock>=1.0
+mox>=0.5.3
+nose
+nose-exclude
+nosehtmloutput>=0.0.3
+nosexcover
+python-subunit>=0.0.18
+oslosphinx
+selenium
+sphinx>=1.1.2,<1.2
+testrepository>=0.0.18
+testtools>=0.9.34
+

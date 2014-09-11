@@ -1,0 +1,14 @@
+# Logstream CI dependency requirements
+eventlet>=0.13.0
+iso8601>=0.1.9
+kombu>=2.4.8
+lesscpy>=0.9j
+lockfile>=0.8
+netaddr>=0.7.6
+pbr>=0.6,!=0.7,<1.0
+pytz>=2010h
+requests>=2.3.0
+six>=1.6.0
+statsd>=3.0
+pyyaml>=3.11
+

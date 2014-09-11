@@ -1,0 +1,24 @@
+---
+host: host-10.165.18.216
+environment: staging
+phase: 0
+ecs_id: AY140706145158953c6b
+ecs_region: cn-qingdao
+---
+host: host-10.163.223.28
+environment: staging
+phase: 1
+ecs_id: AY140628170450311bdc
+ecs_region: cn-qingdao
+---
+host: host-10.165.43.136
+environment: production
+phase: 2
+ecs_id: AY1407172054032437c8
+ecs_region: cn-qingdao
+---
+host: host-10.165.43.233
+environment: production
+phase: 3
+ecs_id: AY1407172054032437c9
+ecs_region: cn-qingdao

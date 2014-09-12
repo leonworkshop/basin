@@ -4,6 +4,8 @@
 # All rights reserved.
 #
 
+set -e
+
 HOME_DIR=/opt/shucaibao
 JUNGAR_SERVER=jungar.internal.shucaibao.com
 STATE_FILE=$HOME_DIR/run/sichuan_state
@@ -42,7 +44,9 @@ nameserver 8.8.8.8
 EOL
 
 print_msg "---------> Install python pip mirror <---------"
-mkdir ~/.pip
+if [[ ! -d ~/.pip ]]; then
+    mkdir ~/.pip
+fi
 cat > ~/.pip/pip.conf << EOL
 [global]
 index-url = http://pypi.douban.com/simple
@@ -97,7 +101,7 @@ git config --global user.name "shucaibao Basin"
 print_msg "Setup the git repository: shucaibao/skeleton"
 
 print_msg "----------> Setup hostname <----------"
-cd $HOME_DIR/ci
+cd $HOME_DIR/basin
 hostname=`cat /etc/hostname`
 tools/with_venv.sh python bin/basin_sethosts.py --verbose --console --boot --ecs_id $hostname --template conf/hosts.tpl
 if [ $? -ne 0 ]; then
@@ -147,6 +151,6 @@ if [[ $DEBUG == 'true' ]]; then
 fi
 
 # Call the secondboot script
-$HOME_DIR/ci/sichuan/bin/sichuan_secondboot.sh
+#$HOME_DIR/basin/sichuan/bin/sichuan_secondboot.sh
 
 

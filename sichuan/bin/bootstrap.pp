@@ -71,7 +71,7 @@ exec { "install_oss_credential":
 
 exec { "python_venv":
   command => "python tools/install_venv.py",
-  cwd => "$home_dir/ci",
+  cwd => "$home_dir/basin",
   user => 'root',
   timeout => '600',
   tries => 2,
@@ -80,7 +80,7 @@ exec { "python_venv":
 }
 
 # TODO: install certificates for nginx https server
-#file { "$home_dir/ci/sichuan/puppet/modules/logstash/files/tuotuo.server.crt":
+#file { "$home_dir/basin/sichuan/puppet/modules/logstash/files/tuotuo.server.crt":
 #  ensure => 'present',
 #  source => ['/root/tuotuo.server.crt'],
 #  owner => 'root',
@@ -88,7 +88,7 @@ exec { "python_venv":
 #  require => Git::Repo['basingit'],
 #}
 #
-#file { "$home_dir/ci/sichuan/puppet/modules/logstash/files/tuotuo.server.key":
+#file { "$home_dir/basin/sichuan/puppet/modules/logstash/files/tuotuo.server.key":
 #  ensure => 'present',
 #  source => ['/root/tuotuo.server.key'],
 #  owner => 'root',
@@ -105,21 +105,21 @@ file { "/etc/puppet/hieradata":
 
 file { "/etc/puppet/hiera.yaml":
   ensure => 'link',
-  target => "$home_dir/ci/sichuan/conf/hiera.yaml",
+  target => "$home_dir/basin/sichuan/conf/hiera.yaml",
   mode => '0644',
   require => Git::Repo['basingit'],
 }
 
 file { "/etc/hiera.yaml":
   ensure => 'link',
-  target => "$home_dir/ci/sichuan/conf/hiera.yaml",
+  target => "$home_dir/basin/sichuan/conf/hiera.yaml",
   mode => '0644',
   require => Git::Repo['basingit'],
 }
 
 file { "/etc/puppet/puppet.conf":
   ensure => 'present',
-  source => ["$home_dir/ci/sichuan/conf/puppet.conf"],
+  source => ["$home_dir/basin/sichuan/conf/puppet.conf"],
   owner => 'root',
   mode => '0644',
   require => Git::Repo['basingit'],

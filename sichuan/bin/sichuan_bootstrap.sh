@@ -46,10 +46,10 @@ export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
 export PATH=$JAVA_HOME/bin:$PATH
 
 # install python virtualenv
-run_with_retry "pip install --upgrade pip"
-run_with_retry "pip install --upgrade virtualenv"
-run_with_retry "pip install --upgrade statsd"
-run_with_retry "pip install --upgrade pyyaml"
+run_with_retry "/usr/local/bin/pip install --upgrade pip"
+run_with_retry "/usr/local/bin/pip install --upgrade virtualenv"
+run_with_retry "/usr/local/bin/pip install --upgrade statsd"
+run_with_retry "/usr/local/bin/pip install --upgrade pyyaml"
 
 # Install puppet
 pushd $HOME_DIR
@@ -79,22 +79,27 @@ fi
 tarim_ip=${TARIM_IP}
 qaidam_ip=${QAIDAM_IP}
 jungar_ip=${JUNGAR_IP}
-puppet apply --detailed-exitcodes --logdest syslog -e "
-  host { 'tarim.internal.shucaibao.net':
+log_out=""
+if [[ $DEBUG != "true" ]]; then
+    log_out="--logdest syslog"
+fi
+puppet apply --detailed-exitcodes $log_out -e "
+  host { 'tarim.internal.shucaibao.com':
     ensure => present,
     ip => '$tarim_ip',
   }
-  host { 'qaidam.internal.shucaibao.net':
+  host { 'qaidam.internal.shucaibao.com':
     ensure => present,
     ip => '$qaidam_ip',
   }
-  host { 'jungar.internal.shucaibao.net':
+  host { 'jungar.internal.shucaibao.com':
     ensure => present,
     ip => '$jungar_ip',
   }
 "
 
 RETVAR=$?
+echo "return vallue: $RETVAR"
 if [[ $RETVAR != 0 && $RETVAR != 2 ]]; then
   system_bad "Failed to add host alias. error code: $RETVAR"
   exit 1

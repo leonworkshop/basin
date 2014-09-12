@@ -49,6 +49,7 @@ puppet_with_retry () {
     fi
     RETVAR=$?
     if [[ $RETVAR == 2 || $RETVAR == 0 ]]; then
+      print_msg "puppet command $1 exit successfully"
       return 0
     fi
     print_msg "Fail in command [$1]....Retry $n/5"

@@ -36,7 +36,7 @@ def parseArguments():
   parser.add_argument('--boot', action='store_true',
                       required=False,
                       help="Specify if the system is in boot phase")
-  parser.add_argument('--ecs_id', required=False,
+  parser.add_argument('--ecs_name', required=False,
                       help="ECS ID required in boot mode")
   parser.add_argument('--hosts', default='/etc/hosts',
                       help="hosts file to write to")
@@ -56,9 +56,9 @@ def prepare():
                     'console': args.console,
                     'logfile': args.logfile})
 
-  if args.boot is True and args.ecs_id is None:
-    log.error("ecs_id must be given in boot mode")
-    raise exp.InvalidConfigurationOption(opt_name="ecs_id",
+  if args.boot is True and args.ecs_name is None:
+    log.error("ecs_name must be given in boot mode")
+    raise exp.InvalidConfigurationOption(opt_name="ecs_name",
                                          opt_val=None)
 
   if not os.path.isfile(args.pmt):
@@ -79,10 +79,10 @@ def set_hostname(args, xmt_mgr):
   """
   try:
     pmt_entries = xmt_mgr.get_entries(xmt.XMT_TYPE_PMT)
-    pmt_entry = [x for x in pmt_entries if args.ecs_id.find(x['ecs_id']) != -1][0]
-#    pmt_entry = xmt_mgr.get_entries(xmt.XMT_TYPE_PMT, filter={'ecs_id': args.ecs_id})[0]
+    pmt_entry = [x for x in pmt_entries if args.ecs_name.find(x['ecs_name']) != -1][0]
+#    pmt_entry = xmt_mgr.get_entries(xmt.XMT_TYPE_PMT, filter={'ecs_name': args.ecs_name})[0]
   except ValueError:
-    log.error("Didn't find the host give ECS_ID [%s]!", args.ecs_id)
+    log.error("Didn't find the host give ecs_name [%s]!", args.ecs_name)
     raise
 
   hostname = pmt_entry['host']

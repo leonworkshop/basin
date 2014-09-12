@@ -80,10 +80,6 @@
 #   [*priority*]              - Location priority. Default: 500. User priority
 #     401-499, 501-599. If the priority is higher than the default priority,
 #     the location will be defined after root, or before root.
-#   [*mp4*]             - Indicates whether or not this loation can be
-#     used for mp4 streaming. Default: false
-#   [*flv*]             - Indicates whether or not this loation can be
-#     used for flv streaming. Default: false
 #
 #
 # Actions:
@@ -167,9 +163,7 @@ define nginx::resource::location (
   $auth_basic           = undef,
   $auth_basic_user_file = undef,
   $rewrite_rules        = [],
-  $priority             = 500,
-  $mp4             = false,
-  $flv             = false,
+  $priority             = 500
 ) {
 
   include nginx::params
@@ -297,15 +291,15 @@ define nginx::resource::location (
   $config_file = "${nginx::config::conf_dir}/sites-available/${vhost_sanitized}.conf"
 
   $location_sanitized_tmp = regsubst($location, '\/', '_', 'G')
-  $location_sanitized = regsubst($location_sanitized_tmp, '\\\\', '_', 'G')
+  $location_sanitized = regsubst($location_sanitized_tmp, "\\\\", '_', 'G')
 
   ## Check for various error conditions
   if ($vhost == undef) {
     fail('Cannot create a location reference without attaching to a virtual host')
   }
-  if (($www_root == undef) and ($proxy == undef) and ($location_alias == undef) and ($stub_status == undef) and ($fastcgi == undef) and ($location_custom_cfg == undef)) {
-    fail('Cannot create a location reference without a www_root, proxy, location_alias, fastcgi, stub_status, or location_custom_cfg defined')
-  }
+#  if (($www_root == undef) and ($proxy == undef) and ($location_alias == undef) and ($stub_status == undef) and ($fastcgi == undef) and ($location_custom_cfg == undef)) {
+#    fail('Cannot create a location reference without a www_root, proxy, location_alias, fastcgi, stub_status, or location_custom_cfg defined')
+#  }
   if (($www_root != undef) and ($proxy != undef)) {
     fail('Cannot define both directory and proxy in a virtual host')
   }
@@ -342,7 +336,7 @@ define nginx::resource::location (
   if ($ssl_only != true) {
     $tmpFile=md5("${vhost_sanitized}-${priority}-${location_sanitized}")
 
-    concat::fragment { $tmpFile:
+    concat::fragment { "${tmpFile}":
       ensure  => present,
       target  => $config_file,
       content => join([
@@ -350,7 +344,7 @@ define nginx::resource::location (
         $content_real,
         template('nginx/vhost/location_footer.erb')
       ], ''),
-      order   => "${priority}", #lint:ignore:only_variable_string waiting on https://github.com/puppetlabs/puppetlabs-concat/commit/f70881fbfd01c404616e9e4139d98dad78d5a918
+      order   => "${priority}",
     }
   }
 
@@ -359,7 +353,7 @@ define nginx::resource::location (
     $ssl_priority = $priority + 300
 
     $sslTmpFile=md5("${vhost_sanitized}-${ssl_priority}-${location_sanitized}-ssl")
-    concat::fragment { $sslTmpFile:
+    concat::fragment {"${sslTmpFile}":
       ensure  => present,
       target  => $config_file,
       content => join([
@@ -367,7 +361,7 @@ define nginx::resource::location (
         $content_real,
         template('nginx/vhost/location_footer.erb')
       ], ''),
-      order   => "${ssl_priority}", #lint:ignore:only_variable_string waiting on https://github.com/puppetlabs/puppetlabs-concat/commit/f70881fbfd01c404616e9e4139d98dad78d5a918
+      order   => "${ssl_priority}",
     }
   }
 

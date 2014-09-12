@@ -4,6 +4,8 @@
 # All rights reserved.
 #
 
+set -e
+
 HOME_DIR=/opt/shucaibao
 JUNGAR_SERVER=jungar.internal.shucaibao.com
 STATE_FILE=$HOME_DIR/run/sichuan_state
@@ -42,7 +44,9 @@ nameserver 8.8.8.8
 EOL
 
 print_msg "---------> Install python pip mirror <---------"
-mkdir ~/.pip
+if [[ ! -d ~/.pip ]]; then
+    mkdir ~/.pip
+fi
 cat > ~/.pip/pip.conf << EOL
 [global]
 index-url = http://pypi.douban.com/simple

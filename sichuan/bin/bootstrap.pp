@@ -71,7 +71,7 @@ exec { "install_oss_credential":
 
 exec { "python_venv":
   command => "python tools/install_venv.py",
-  cwd => "$home_dir/ci",
+  cwd => "$home_dir/basin",
   user => 'root',
   timeout => '600',
   tries => 2,

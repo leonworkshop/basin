@@ -6,7 +6,7 @@
 # Common functions for sichuan bash scripts
 #
 
-HOME_DIR=/opt/logstream
+HOME_DIR=/opt/shucaibao
 BASIN_SENDSTATS=$HOME_DIR/basin/bin/basin_sendstats.py
 STATE_FILE=$HOME_DIR/run/sichuan_state
 

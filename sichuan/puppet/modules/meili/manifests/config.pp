@@ -34,7 +34,7 @@ class meili::config inherits meili {
 
   # create superuser in the first run
   exec { 'meili_create_superuser':
-    command => "${tools_path}/with_venv.sh meili --config=${config_dir}/meili.conf.py createsuperuser --username=admin --email=admin@logstream.net --noinput",
+    command => "${tools_path}/with_venv.sh meili --config=${config_dir}/meili.conf.py createsuperuser --username=admin --email=admin@shucaibao.com --noinput",
     path => ['/bin', '/sbin', '/usr/bin', '/usr/local/bin'],
     cwd => "${root_dir}",
     require => Exec['meili_syncdb'],

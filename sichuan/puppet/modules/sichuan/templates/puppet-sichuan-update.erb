@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# This file is managed by puppet to update sichuan configuration
+#
+
+logger -t "sichuan" "Start sichuan configuration update"
+
+HOME_DIR=<%= scope.lookupvar('sichuan::home_dir') %>
+
+cd $HOME_DIR/basin
+git pull
+tools/with_venv.sh python sichuan/bin/sichuan_deploy.py --pmt $HOME_DIR/skeleton/xmt/pmt.yaml
+
+PUPPETDIR=$HOME_DIR/basin/sichuan/puppet
+cd $PUPPETDIR
+puppet apply --logdest syslog $PUPPETDIR/manifests/sites.pp --modulepath=$PUPPETDIR/modules:/etc/puppet/modules

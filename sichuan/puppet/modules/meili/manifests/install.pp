@@ -10,7 +10,6 @@ class meili::install inherits meili {
   exec { 'setup-virtualenv':
     command => "python ${tools_path}/install_venv.py",
     path => ['/bin', '/sbin', '/usr/bin'],
-    require => Package['meili'],
   }
 
   # setup meili cli environment

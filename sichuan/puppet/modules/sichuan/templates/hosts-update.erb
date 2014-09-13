@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# This file is managed by pupppet to update /etc/hosts file
+#
+
+logger -t "sichuan" "Update /etc/hosts file"
+
+HOME_DIR=<%= scope.lookupvar('sichuan::home_dir') %>
+cd $HOME_DIR/basin
+tools/with_venv.sh python bin/basin_sethosts.py --template $HOME_DIR/basin/conf/hosts.tpl

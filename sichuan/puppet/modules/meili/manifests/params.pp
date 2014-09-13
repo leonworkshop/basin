@@ -4,7 +4,7 @@
 class meili::params {
   $root_dir             = '/opt/meili'
   $config_dir           = '/opt/meili/conf'
-#  $start_command        = '/opt/meili/tools/with_venv.sh meili --config=/opt/meili/conf/meili.conf.py runserver'
+  $source_dir           = '/opt/shucaibao/shucaibao/projects/meili'
   $start_command        = '/opt/meili/.venv/bin/meili --config=/opt/meili/conf/meili.conf.py runserver'
 
   $package_name         = 'meili'

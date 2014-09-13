@@ -41,6 +41,12 @@ file { '/alidata1':
   require => Exec['Partition and format /dev/xvdb'],
 }
 
+git::repo { 'shucaibaogit':
+    target => "$home_dir/shucaibao",
+    source => "logstream@$jungar_ip_address:/opt/shucaibao/shucaibao",
+    user => "root",
+}
+
 git::repo { 'basingit':
   target => "$home_dir/basin",
   source => "logstream@$jungar_ip_address:/opt/shucaibao/basin",

@@ -1,0 +1,21 @@
+#!/bin/bash
+# This file is managed by puppet
+#
+
+HOME_DIR=<%= scope.lookupvar('sichuan::home_dir') %>
+BASIN_SENDSTATS=$HOME_DIR/basin/bin/basin_sendstats.py
+STATE_FILE=$HOME_DIR/run/sichuan_state
+
+cd $HOME_DIR/basin
+if [ -f $HOME_DIR/run/host.yaml ]; then
+  phase=`cat $HOME_DIR/run/host.yaml | grep "phase:" | awk '{print $2}'`
+  $HOME_DIR/basin/tools/with_venv.sh python $BASIN_SENDSTATS --server tarim.internal.logstream.net --metric "server.state" --value $STATE_FILE --pid $HOME_DIR/run/stats.pid --prefix "phase$phase"
+
+  environ=`cat $HOME_DIR/run/host.yaml | grep "environment:" | awk '{print $2}'`
+  build_url=`cat $HOME_DIR/sites/hiera/$environ/logstream-build.yaml | grep "logstream_build:" | awk -F '.' '{print $4}'`
+  $HOME_DIR/basin/tools/with_venv.sh python $BASIN_SENDSTATS --server tarim.internal.logstream.net --metric "server.build" --value $build_url --pid $HOME_DIR/run/stats.pid --prefix "phase$phase"
+
+else
+  $HOME_DIR/basin/tools/with_venv.sh python $BASIN_SENDSTATS --server tarim.internal.logstream.net --metric "server.state" --value $STATE_FILE --pid $HOME_DIR/run/stats.pid
+fi
+

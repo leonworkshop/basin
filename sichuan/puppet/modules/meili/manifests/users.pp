@@ -3,6 +3,9 @@
 class meili::users inherits meili {
 
   if $user_manage == true {
+    group { $group:
+        ensure => $group_ensure,
+    }
 
     user { $user:
       ensure     => $user_ensure,

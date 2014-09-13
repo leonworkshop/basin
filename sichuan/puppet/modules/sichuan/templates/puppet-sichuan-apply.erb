@@ -1,0 +1,47 @@
+#!/bin/bash
+#
+# This file is managed by puppet
+#
+
+HOME_DIR=<%= scope.lookupvar('sichuan::home_dir') %>
+
+. $HOME_DIR/basin/sichuan/bin/sichuan_functions
+
+cd $HOME_DIR/basin
+
+# Move to config-inprogress state
+config_inprogress "In progress of sichuan-apply execution"
+
+if [[ $DEBUG != "true" ]]; then
+    tools/with_venv.sh python sichuan/bin/sichuan_deploy.py --pmt $HOME_DIR/skeleton/xmt/pmt.yaml
+else
+    tools/with_venv.sh python sichuan/bin/sichuan_deploy.py --pmt $HOME_DIR/skeleton/xmt/pmt.yaml  --console --verbose
+fi
+
+if [[ $? -ne 0 ]]; then
+  # move to config_fault if failure happens
+  config_fault "Fail in sichuan_deploy.py during sichuan-apply execution"
+  exit 1
+fi
+
+PUPPETDIR=$HOME_DIR/basin/sichuan/puppet
+
+export FACTER_basin_dir=$FACTER_qaidam_root_dir/..
+export FACTER_oss_access_id=$OSS_ACCESS_ID
+export FACTER_oss_access_key=$OSS_ACCESS_KEY
+export FACTER_oss_host=$OSS_HOST
+
+if [[ $DEBUG != "true" ]]; then
+    puppet apply --detailed-exitcodes --logdest syslog $PUPPETDIR/manifests/sites.pp --modulepath=$PUPPETDIR/modules:/etc/puppet/modules
+else
+    puppet apply --detailed-exitcodes $PUPPETDIR/manifests/sites.pp --modulepath=$PUPPETDIR/modules:/etc/puppet/modules
+fi
+if [[ $? -eq 2 ]]; then
+  system_ready "completed the last sichuan-apply execution"
+  exit 0
+fi
+
+# move to config_fault if failure happens
+config_fault "Fail in puppet apply during sichuan-apply execution"
+exit 1
+

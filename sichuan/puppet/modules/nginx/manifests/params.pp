@@ -15,36 +15,6 @@
 # This class file is not called directly
 class nginx::params {
 
-<<<<<<< HEAD
-  $nx_temp_dir                = '/tmp'
-  $nx_run_dir                 = '/var/nginx'
-
-  $nx_conf_template           = 'nginx/conf.d/nginx.conf.erb'
-  $nx_proxy_conf_template     = 'nginx/conf.d/proxy.conf.erb'
-  $nx_confd_purge             = false
-  $nx_vhost_purge             = false
-  $nx_worker_processes        = 1
-  $nx_worker_connections      = 1024
-  $nx_worker_rlimit_nofile    = 1024
-  $nx_types_hash_max_size     = 1024
-  $nx_types_hash_bucket_size  = 512
-  $nx_names_hash_bucket_size  = 64
-  $nx_names_hash_max_size     = 512
-  $nx_multi_accept            = off
-  # One of [kqueue|rtsig|epoll|/dev/poll|select|poll|eventport]
-  # or false to use OS default
-  $nx_events_use              = false
-  $nx_sendfile                = on
-  $nx_keepalive_timeout       = 65
-  $nx_tcp_nodelay             = on
-  $nx_gzip                    = on
-  $nx_server_tokens           = on
-  $nx_spdy                    = off
-  $nx_ssl_stapling            = off
-
-  $nx_proxy_redirect          = off
-  $nx_proxy_set_header        = [
-=======
   $nx_temp_dir                       = '/tmp'
   $nx_run_dir                        = '/var/nginx'
 
@@ -74,51 +44,18 @@ class nginx::params {
 
   $nx_proxy_redirect                 = off
   $nx_proxy_set_header               = [
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
     'Host $host',
     'X-Real-IP $remote_addr',
     'X-Forwarded-For $proxy_add_x_forwarded_for',
   ]
-<<<<<<< HEAD
-  $nx_proxy_cache_path        = false
-  $nx_proxy_cache_levels      = 1
-  $nx_proxy_cache_keys_zone   = 'd2:100m'
-  $nx_proxy_cache_max_size    = '500m'
-  $nx_proxy_cache_inactive    = '20m'
-
-  $nx_client_body_temp_path   = "${nx_run_dir}/client_body_temp"
-  $nx_client_body_buffer_size = '128k'
-  $nx_client_max_body_size    = '10m'
-  $nx_proxy_temp_path         = "${nx_run_dir}/proxy_temp"
-  $nx_proxy_connect_timeout   = '90'
-  $nx_proxy_send_timeout      = '90'
-  $nx_proxy_read_timeout      = '90'
-  $nx_proxy_buffers           = '32 4k'
-  $nx_proxy_http_version      = '1.0'
-  $nx_proxy_buffer_size       = '8k'
-
-  $nx_logdir = $::kernel ? {
-    /(?i-mx:linux)/ => '/var/log/nginx',
-    /(?i-mx:sunos)/ => '/var/log/nginx',
-  }
-
-  $nx_pid = $::kernel ? {
-    /(?i-mx:linux)/  => '/var/run/nginx.pid',
-    /(?i-mx:sunos)/  => '/var/run/nginx.pid',
-  }
-
-  $nx_conf_dir = $::kernelversion ? {
-    /(?i-mx:joyent)/ => '/opt/local/etc/nginx',
-    default => '/etc/nginx',
-=======
   $nx_proxy_cache_path               = false
-  $nx_proxy_cache_levels             = 1
+  $nx_proxy_cache_levels             = '1'
   $nx_proxy_cache_keys_zone          = 'd2:100m'
   $nx_proxy_cache_max_size           = '500m'
   $nx_proxy_cache_inactive           = '20m'
 
   $nx_fastcgi_cache_path             = false
-  $nx_fastcgi_cache_levels           = 1
+  $nx_fastcgi_cache_levels           = '1'
   $nx_fastcgi_cache_keys_zone        = 'd3:100m'
   $nx_fastcgi_cache_max_size         = '500m'
   $nx_fastcgi_cache_inactive         = '20m'
@@ -156,7 +93,6 @@ class nginx::params {
       /(?i-mx:freebsd)/ => '/usr/local/etc/nginx',
       default           => '/etc/nginx',
     }
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
   }
 
   if $::osfamily {
@@ -165,22 +101,6 @@ class nginx::params {
       default => 'webservd',
     }
     $nx_daemon_user = $::osfamily ? {
-<<<<<<< HEAD
-      /(?i-mx:redhat|suse|gentoo|linux)/ => 'nginx',
-      /(?i-mx:debian)/                   => 'www-data',
-      /(?i-mx:solaris)/                  => $solaris_nx_daemon_user,
-    }
-  } else {
-    warning('$::osfamily not defined. Support for $::operatingsystem is deprecated')
-    warning("Please upgrade from factor ${::facterversion} to >= 1.7.2")
-    $nx_daemon_user = $::operatingsystem ? {
-      /(?i-mx:debian|ubuntu)/                                                                => 'www-data',
-      /(?i-mx:fedora|rhel|redhat|centos|scientific|suse|opensuse|amazon|gentoo|oraclelinux)/ => 'nginx',
-      /(?i-mx:solaris)/                                                                      => 'webservd',
-    }
-  }
-
-=======
       /(?i-mx:archlinux)/                => 'http',
       /(?i-mx:redhat|suse|gentoo|linux)/ => 'nginx',
       /(?i-mx:debian)/                   => 'www-data',
@@ -207,7 +127,6 @@ class nginx::params {
   # Nginx is default launched as root if not change this parameter
   $nx_super_user = true
 
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
   # Service restart after Nginx 0.7.53 could also be just
   # "/path/to/nginx/bin -s HUP" Some init scripts do a configtest, some don't.
   # If configtest_enable it's true then service restart will take
@@ -229,8 +148,6 @@ class nginx::params {
   $package_ensure = 'present'
   $package_source = 'nginx'
   $manage_repo    = true
-<<<<<<< HEAD
-=======
 
   # Specific owner for sites-available directory
   $sites_available_owner = 'root'
@@ -241,5 +158,4 @@ class nginx::params {
   $global_owner = 'root'
   $global_group = $root_group
   $global_mode  = '0644'
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
 }

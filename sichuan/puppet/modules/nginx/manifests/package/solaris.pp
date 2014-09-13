@@ -7,11 +7,7 @@
 # *package_name*
 # Needs to be specified. SFEnginx,CSWnginx depending on where you get it.
 #
-<<<<<<< HEAD
-# *package_source* 
-=======
 # *package_source*
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
 # Needed in case of Solaris 10.
 #
 # Actions:
@@ -27,12 +23,7 @@ class nginx::package::solaris(
     $package_ensure = 'present'
   ){
   package { $package_name:
-<<<<<<< HEAD
-	ensure 		=> $package_ensure,
-  	source 		=> $package_source
-=======
     ensure => $package_ensure,
     source => $package_source
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
   }
 }

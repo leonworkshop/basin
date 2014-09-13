@@ -8,7 +8,7 @@
 HOME_DIR=/opt/shucaibao
 STATE_FILE=$HOME_DIR/run/sichuan_state
 
-. $HOME_DIR/ci/sichuan/bin/sichuan_functions
+. $HOME_DIR/basin/sichuan/bin/sichuan_functions
 
 
 print_msg "============================================"
@@ -42,19 +42,18 @@ fi
 #popd
 
 
-#print_msg "----------> get the latest build bits <----------"
-# Get the specified shucaibao build bits
-#pushd $HOME_DIR/ci
-#if [[ $DEBUG == "true" ]]; then
-#  tools/with_venv.sh python sichuan/bin/sichuan_deploy.py --home $HOME_DIR --pmt $HOME_DIR/sites/xmt/pmt.yaml --bmt $HOME_DIR/sites/xmt/bmt.yaml --console --verbose
-#else
-#  tools/with_venv.sh python sichuan/bin/sichuan_deploy.py --home $HOME_DIR --pmt $HOME_DIR/sites/xmt/pmt.yaml --bmt $HOME_DIR/sites/xmt/bmt.yaml
-#fi
-#if [ $? -ne 0 ]; then
-#  system_bad "Failed in sichuan_deploy script."
-#  exit 1
-#fi
-#popd
+print_msg "----------> get the latest build bits <----------"
+pushd $HOME_DIR/basin
+if [[ $DEBUG == "true" ]]; then
+  tools/with_venv.sh python sichuan/bin/sichuan_deploy.py --pmt $HOME_DIR/skeleton/xmt/pmt.yaml --console --verbose
+else
+  tools/with_venv.sh python sichuan/bin/sichuan_deploy.py --pmt $HOME_DIR/skeleton/xmt/pmt.yaml
+fi
+if [ $? -ne 0 ]; then
+  system_bad "Failed in sichuan_deploy script."
+  exit 1
+fi
+popd
 
 print_msg "----------> apply the latest build bits <----------"
 # Apply the current puppet config

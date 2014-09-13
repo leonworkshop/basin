@@ -5,11 +5,8 @@
 # Parameters:
 #   [*ensure*]               - Enables or disables the specified location
 #     (present|absent)
-<<<<<<< HEAD
-=======
 #   [*internal*]             - Indicates whether or not this loation can be
 #     used for internal requests only. Default: false
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
 #   [*vhost*]                - Defines the default vHost for this location
 #     entry to include with
 #   [*location*]             - Specifies the URI associated with this location
@@ -25,10 +22,6 @@
 #   [*proxy*]                - Proxy server(s) for a location to connect to.
 #     Accepts a single value, can be used in conjunction with
 #     nginx::resource::upstream
-<<<<<<< HEAD
-#   [*proxy_read_timeout*]   - Override the default the proxy read timeout
-#     value of 90 seconds
-=======
 #   [*proxy_redirect*]       - sets the text, which must be changed in
 #     response-header "Location" and "Refresh" in the response of the proxied
 #     server.
@@ -37,8 +30,8 @@
 #   [*proxy_connect_timeout*] - Override the default the proxy connect timeout
 #     value of 90 seconds
 #   [*proxy_set_header*]     - Array of vhost headers to set
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
 #   [*fastcgi*]              - location of fastcgi (host:port)
+#   [*fastcgi_param*]        - Set additional custom fastcgi_params
 #   [*fastcgi_params*]       - optional alternative fastcgi_params file to use
 #   [*fastcgi_script*]       - optional SCRIPT_FILE parameter
 #   [*fastcgi_split_path*]   - Allows settings of fastcgi_split_path_info so
@@ -51,15 +44,12 @@
 #     for this location
 #   [*stub_status*]          - If true it will point configure module
 #     stub_status to provide nginx stats on location
-<<<<<<< HEAD
-=======
 #   [*raw_prepend*]          - A single string, or an array of strings to
 #     prepend to the location directive (after custom_cfg directives). NOTE:
 #     YOU are responsible for a semicolon on each line that requires one.
 #   [*raw_append*]           - A single string, or an array of strings to
 #     append to the location directive (after custom_cfg directives). NOTE:
 #     YOU are responsible for a semicolon on each line that requires one.
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
 #   [*location_custom_cfg*]  - Expects a hash with custom directives, cannot
 #     be used with other location types (proxy, fastcgi, root, or stub_status)
 #   [*location_cfg_prepend*] - Expects a hash with extra directives to put
@@ -118,13 +108,21 @@
 #    vhost               => 'test2.local',
 #    location_cfg_append => $my_config,
 #  }
+#
+#  Add Custom fastcgi_params
+#  nginx::resource::location { 'test2.local-bob':
+#    ensure   => present,
+#    www_root => '/var/www/bob',
+#    location => '/bob',
+#    vhost    => 'test2.local',
+#    fastcgi_param => {
+#       'APP_ENV' => 'local',
+#    }
+#  }
 
 define nginx::resource::location (
   $ensure               = present,
-<<<<<<< HEAD
-=======
   $internal             = false,
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
   $location             = $name,
   $vhost                = undef,
   $www_root             = undef,
@@ -134,18 +132,13 @@ define nginx::resource::location (
     'index.htm',
     'index.php'],
   $proxy                = undef,
-<<<<<<< HEAD
-  $proxy_read_timeout   = $nginx::params::nx_proxy_read_timeout,
-  $fastcgi              = undef,
-  $fastcgi_params       = '/etc/nginx/fastcgi_params',
-=======
   $proxy_redirect       = $nginx::config::proxy_redirect,
   $proxy_read_timeout   = $nginx::config::proxy_read_timeout,
   $proxy_connect_timeout = $nginx::config::proxy_connect_timeout,
   $proxy_set_header     = $nginx::config::proxy_set_header,
   $fastcgi              = undef,
+  $fastcgi_param        = undef,
   $fastcgi_params       = "${nginx::config::conf_dir}/fastcgi_params",
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
   $fastcgi_script       = undef,
   $fastcgi_split_path   = undef,
   $ssl                  = false,
@@ -155,11 +148,8 @@ define nginx::resource::location (
   $location_deny        = undef,
   $option               = undef,
   $stub_status          = undef,
-<<<<<<< HEAD
-=======
   $raw_prepend          = undef,
   $raw_append           = undef,
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
   $location_custom_cfg  = undef,
   $location_cfg_prepend = undef,
   $location_cfg_append  = undef,
@@ -175,11 +165,6 @@ define nginx::resource::location (
   $rewrite_rules        = [],
   $priority             = 500
 ) {
-<<<<<<< HEAD
-  File {
-    owner  => 'root',
-    group  => 'root',
-=======
 
   include nginx::params
   $root_group = $nginx::params::root_group
@@ -187,7 +172,6 @@ define nginx::resource::location (
   File {
     owner  => 'root',
     group  => $root_group,
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
     mode   => '0644',
     notify => Class['nginx::service'],
   }
@@ -208,16 +192,15 @@ define nginx::resource::location (
   if ($proxy != undef) {
     validate_string($proxy)
   }
-<<<<<<< HEAD
-  validate_string($proxy_read_timeout)
-=======
   validate_string($proxy_redirect)
   validate_string($proxy_read_timeout)
   validate_string($proxy_connect_timeout)
   validate_array($proxy_set_header)
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
   if ($fastcgi != undef) {
     validate_string($fastcgi)
+  }
+  if ($fastcgi_param != undef) {
+    validate_hash($fastcgi_param)
   }
   validate_string($fastcgi_params)
   if ($fastcgi_script != undef) {
@@ -226,12 +209,9 @@ define nginx::resource::location (
   if ($fastcgi_split_path != undef) {
     validate_string($fastcgi_split_path)
   }
-<<<<<<< HEAD
-=======
 
   validate_bool($internal)
 
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
   validate_bool($ssl)
   validate_bool($ssl_only)
   if ($location_alias != undef) {
@@ -249,8 +229,6 @@ define nginx::resource::location (
   if ($stub_status != undef) {
     validate_bool($stub_status)
   }
-<<<<<<< HEAD
-=======
   if ($raw_prepend != undef) {
     if (is_array($raw_prepend)) {
       validate_array($raw_prepend)
@@ -265,7 +243,6 @@ define nginx::resource::location (
       validate_string($raw_append)
     }
   }
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
   if ($location_custom_cfg != undef) {
     validate_hash($location_custom_cfg)
   }
@@ -300,13 +277,8 @@ define nginx::resource::location (
     fail('$priority must be an integer.')
   }
   validate_array($rewrite_rules)
-<<<<<<< HEAD
-  if ($priority < 401) or ($priority > 599) {
-    fail('$priority must be in the range 401-599.')
-=======
   if ($priority < 401) or ($priority > 899) {
     fail('$priority must be in the range 401-899.')
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
   }
 
   # # Shared Variables
@@ -316,48 +288,29 @@ define nginx::resource::location (
   }
 
   $vhost_sanitized = regsubst($vhost, ' ', '_', 'G')
-<<<<<<< HEAD
-  $config_file = "${nginx::config::nx_conf_dir}/sites-available/${vhost_sanitized}.conf"
-
-  $location_sanitized_tmp = regsubst($location, '\/', '_', 'G')
-  $location_sanitized = regsubst($location_sanitized_tmp, '\\', '_', 'G')
-=======
   $config_file = "${nginx::config::conf_dir}/sites-available/${vhost_sanitized}.conf"
 
   $location_sanitized_tmp = regsubst($location, '\/', '_', 'G')
   $location_sanitized = regsubst($location_sanitized_tmp, "\\\\", '_', 'G')
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
 
   ## Check for various error conditions
   if ($vhost == undef) {
     fail('Cannot create a location reference without attaching to a virtual host')
   }
-  if (($www_root == undef) and ($proxy == undef) and ($location_alias == undef) and ($stub_status == undef) and ($fastcgi == undef) and ($location_custom_cfg == undef)) {
-    fail('Cannot create a location reference without a www_root, proxy, location_alias, fastcgi, stub_status, or location_custom_cfg defined')
-  }
+#  if (($www_root == undef) and ($proxy == undef) and ($location_alias == undef) and ($stub_status == undef) and ($fastcgi == undef) and ($location_custom_cfg == undef)) {
+#    fail('Cannot create a location reference without a www_root, proxy, location_alias, fastcgi, stub_status, or location_custom_cfg defined')
+#  }
   if (($www_root != undef) and ($proxy != undef)) {
     fail('Cannot define both directory and proxy in a virtual host')
   }
 
-  # Use proxy or fastcgi template if $proxy is defined, otherwise use directory template.
-  if ($proxy != undef) {
-<<<<<<< HEAD
-    $content_real = template('nginx/vhost/vhost_location_proxy.erb')
-  } elsif ($location_alias != undef) {
-    $content_real = template('nginx/vhost/vhost_location_alias.erb')
-  } elsif ($stub_status != undef) {
-    $content_real = template('nginx/vhost/vhost_location_stub_status.erb')
-  } elsif ($fastcgi != undef) {
-    $content_real = template('nginx/vhost/vhost_location_fastcgi.erb')
-  } elsif ($www_root != undef) {
-    $content_real = template('nginx/vhost/vhost_location_directory.erb')
-  } else {
-    $content_real = template('nginx/vhost/vhost_location_empty.erb')
+  # fastcgi_script is deprecated
+  if ($fastcgi_script != undef) {
+    warning('The $fastcgi_script parameter is deprecated; please use $fastcgi_param instead to define custom fastcgi_params!')
   }
 
-  if $fastcgi != undef and !defined(File['/etc/nginx/fastcgi_params']) {
-    file { '/etc/nginx/fastcgi_params':
-=======
+  # Use proxy or fastcgi template if $proxy is defined, otherwise use directory template.
+  if ($proxy != undef) {
     $content_real = template('nginx/vhost/locations/proxy.erb')
   } elsif ($location_alias != undef) {
     $content_real = template('nginx/vhost/locations/alias.erb')
@@ -373,7 +326,6 @@ define nginx::resource::location (
 
   if $fastcgi != undef and !defined(File[$fastcgi_params]) {
     file { $fastcgi_params:
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
       ensure  => present,
       mode    => '0770',
       content => template('nginx/vhost/fastcgi_params.erb'),
@@ -382,12 +334,6 @@ define nginx::resource::location (
 
   ## Create stubs for vHost File Fragment Pattern
   if ($ssl_only != true) {
-<<<<<<< HEAD
-    concat::fragment { "${vhost_sanitized}-${priority}-${location_sanitized}":
-      ensure  => present,
-      target  => $config_file,
-      content => $content_real,
-=======
     $tmpFile=md5("${vhost_sanitized}-${priority}-${location_sanitized}")
 
     concat::fragment { "${tmpFile}":
@@ -398,20 +344,11 @@ define nginx::resource::location (
         $content_real,
         template('nginx/vhost/location_footer.erb')
       ], ''),
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
       order   => "${priority}",
     }
   }
 
   ## Only create SSL Specific locations if $ssl is true.
-<<<<<<< HEAD
-  if ($ssl == true) {
-    $ssl_priority = $priority + 300
-    concat::fragment {"${vhost_sanitized}-${ssl_priority}-${location_sanitized}-ssl":
-      ensure  => present,
-      target  => $config_file,
-      content => $content_real,
-=======
   if ($ssl == true or $ssl_only == true) {
     $ssl_priority = $priority + 300
 
@@ -424,18 +361,13 @@ define nginx::resource::location (
         $content_real,
         template('nginx/vhost/location_footer.erb')
       ], ''),
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
       order   => "${ssl_priority}",
     }
   }
 
   if ($auth_basic_user_file != undef) {
     #Generate htpasswd with provided file-locations
-<<<<<<< HEAD
-    file { "${nginx::params::nx_conf_dir}/${location_sanitized}_htpasswd":
-=======
     file { "${nginx::config::conf_dir}/${location_sanitized}_htpasswd":
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
       ensure => $ensure,
       mode   => '0644',
       source => $auth_basic_user_file,

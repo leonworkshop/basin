@@ -40,6 +40,7 @@ fi
 
 apt-get update
 apt-get install git openjdk-7-jdk curl htop monit vim-nox supervisor python-pip python-dev build-essential --yes
+apt-get install libmysqlclient-dev libffi-dev --yes
 print_msg "apt-get installation done"
 
 export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64

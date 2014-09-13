@@ -29,43 +29,6 @@
 #   include nginx
 # }
 class nginx (
-<<<<<<< HEAD
-  $worker_processes       = $nginx::params::nx_worker_processes,
-  $worker_connections     = $nginx::params::nx_worker_connections,
-  $worker_rlimit_nofile   = $nginx::params::nx_worker_rlimit_nofile,
-  $package_name           = $nginx::params::package_name,
-  $package_ensure         = $nginx::params::package_ensure,
-  $package_source         = $nginx::params::package_source,
-  $proxy_set_header       = $nginx::params::nx_proxy_set_header,
-  $proxy_http_version     = $nginx::params::nx_proxy_http_version,
-  $confd_purge            = $nginx::params::nx_confd_purge,
-  $vhost_purge            = $nginx::params::nx_vhost_purge,
-  $proxy_cache_path       = $nginx::params::nx_proxy_cache_path,
-  $proxy_cache_levels     = $nginx::params::nx_proxy_cache_levels,
-  $proxy_cache_keys_zone  = $nginx::params::nx_proxy_cache_keys_zone,
-  $proxy_cache_max_size   = $nginx::params::nx_proxy_cache_max_size,
-  $proxy_cache_inactive   = $nginx::params::nx_proxy_cache_inactive,
-  $configtest_enable      = $nginx::params::nx_configtest_enable,
-  $service_restart        = $nginx::params::nx_service_restart,
-  $service_ensure         = $nginx::params::nx_service_ensure,
-  $mail                   = $nginx::params::nx_mail,
-  $server_tokens          = $nginx::params::nx_server_tokens,
-  $client_max_body_size   = $nginx::params::nx_client_max_body_size,
-  $names_hash_bucket_size = $nginx::params::nx_names_hash_bucket_size,
-  $names_hash_max_size    = $nginx::params::nx_names_hash_max_size,
-  $proxy_buffers          = $nginx::params::nx_proxy_buffers,
-  $proxy_buffer_size      = $nginx::params::nx_proxy_buffer_size,
-  $http_cfg_append        = $nginx::params::nx_http_cfg_append,
-  $nginx_error_log        = $nginx::params::nx_nginx_error_log,
-  $http_access_log        = $nginx::params::nx_http_access_log,
-  $gzip                   = $nginx::params::nx_gzip,
-  $conf_template          = $nginx::params::nx_conf_template,
-  $proxy_conf_template    = $nginx::params::nx_proxy_conf_template,
-  $nginx_vhosts           = {},
-  $nginx_upstreams        = {},
-  $nginx_locations        = {},
-  $manage_repo            = $nginx::params::manage_repo,
-=======
   $client_body_buffer_size        = $nginx::params::nx_client_body_buffer_size,
   $client_body_temp_path          = $nginx::params::nx_client_body_temp_path,
   $client_max_body_size           = $nginx::params::nx_client_max_body_size,
@@ -133,15 +96,14 @@ class nginx (
   $worker_connections             = $nginx::params::nx_worker_connections,
   $worker_processes               = $nginx::params::nx_worker_processes,
   $worker_rlimit_nofile           = $nginx::params::nx_worker_rlimit_nofile,
-  $global_owner                   = $nginx::params::nx_global_owner,
-  $global_group                   = $nginx::params::nx_global_group,
-  $global_mode                    = $nginx::params::nx_global_mode,
-  $sites_available_owner          = $nginx::params::nx_sites_available_owner,
-  $sites_available_group          = $nginx::params::nx_sites_available_group,
-  $sites_available_mode           = $nginx::params::nx_sites_available_mode,
+  $global_owner                   = $nginx::params::global_owner,
+  $global_group                   = $nginx::params::global_group,
+  $global_mode                    = $nginx::params::global_mode,
+  $sites_available_owner          = $nginx::params::sites_available_owner,
+  $sites_available_group          = $nginx::params::sites_available_group,
+  $sites_available_mode           = $nginx::params::sites_available_mode,
   $geo_mappings                   = {},
   $string_mappings                = {},
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
 ) inherits nginx::params {
 
   include stdlib
@@ -155,13 +117,10 @@ class nginx (
   if (!is_integer($worker_rlimit_nofile)) {
     fail('$worker_rlimit_nofile must be an integer.')
   }
-<<<<<<< HEAD
-=======
   if (!is_string($events_use)) and ($events_use != false) {
     fail('$events_use must be a string or false.')
   }
   validate_string($multi_accept)
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
   validate_string($package_name)
   validate_string($package_ensure)
   validate_string($package_source)
@@ -172,21 +131,15 @@ class nginx (
   if ($proxy_cache_path != false) {
     validate_string($proxy_cache_path)
   }
-  if (!is_integer($proxy_cache_levels)) {
-    fail('$proxy_cache_levels must be an integer.')
-  }
+  validate_re($proxy_cache_levels, '^[12](:[12])*$')
   validate_string($proxy_cache_keys_zone)
   validate_string($proxy_cache_max_size)
   validate_string($proxy_cache_inactive)
-<<<<<<< HEAD
-=======
 
   if ($fastcgi_cache_path != false) {
         validate_string($fastcgi_cache_path)
   }
-  if (!is_integer($fastcgi_cache_levels)) {
-    fail('$fastcgi_cache_levels must be an integer.')
-  }
+  validate_re($fastcgi_cache_levels, '^[12](:[12])*$')
   validate_string($fastcgi_cache_keys_zone)
   validate_string($fastcgi_cache_max_size)
   validate_string($fastcgi_cache_inactive)
@@ -197,7 +150,6 @@ class nginx (
     validate_string($fastcgi_cache_use_stale)
   }
 
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
   validate_bool($configtest_enable)
   validate_string($service_restart)
   validate_bool($mail)
@@ -212,24 +164,16 @@ class nginx (
   validate_string($proxy_buffers)
   validate_string($proxy_buffer_size)
   if ($http_cfg_append != false) {
-<<<<<<< HEAD
-    validate_hash($http_cfg_append)
-  }
-=======
     if !(is_hash($http_cfg_append) or is_array($http_cfg_append)) {
       fail('$http_cfg_append must be either a hash or array')
     }
   }
 
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
   validate_string($nginx_error_log)
   validate_string($http_access_log)
   validate_hash($nginx_upstreams)
   validate_hash($nginx_vhosts)
   validate_hash($nginx_locations)
-<<<<<<< HEAD
-  validate_bool($manage_repo)
-=======
   validate_hash($nginx_mailhosts)
   validate_bool($manage_repo)
   validate_string($proxy_headers_hash_bucket_size)
@@ -237,7 +181,6 @@ class nginx (
 
   validate_hash($string_mappings)
   validate_hash($geo_mappings)
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
 
   class { 'nginx::package':
     package_name   => $package_name,
@@ -248,34 +191,6 @@ class nginx (
   }
 
   class { 'nginx::config':
-<<<<<<< HEAD
-    worker_processes       => $worker_processes,
-    worker_connections     => $worker_connections,
-    worker_rlimit_nofile   => $worker_rlimit_nofile,
-    proxy_set_header       => $proxy_set_header,
-    proxy_http_version     => $proxy_http_version,
-    proxy_cache_path       => $proxy_cache_path,
-    proxy_cache_levels     => $proxy_cache_levels,
-    proxy_cache_keys_zone  => $proxy_cache_keys_zone,
-    proxy_cache_max_size   => $proxy_cache_max_size,
-    proxy_cache_inactive   => $proxy_cache_inactive,
-    confd_purge            => $confd_purge,
-    vhost_purge            => $vhost_purge,
-    server_tokens          => $server_tokens,
-    client_max_body_size   => $client_max_body_size,
-    names_hash_bucket_size => $names_hash_bucket_size,
-    names_hash_max_size    => $names_hash_max_size,
-    proxy_buffers          => $proxy_buffers,
-    proxy_buffer_size      => $proxy_buffer_size,
-    http_cfg_append        => $http_cfg_append,
-    nginx_error_log        => $nginx_error_log,
-    http_access_log        => $http_access_log,
-    gzip                   => $gzip,
-    conf_template          => $conf_template,
-    proxy_conf_template    => $proxy_conf_template,
-    require                => Class['nginx::package'],
-    notify                 => Class['nginx::service'],
-=======
     client_body_buffer_size        => $client_body_buffer_size,
     client_body_temp_path          => $client_body_temp_path,
     client_max_body_size           => $client_max_body_size,
@@ -340,7 +255,6 @@ class nginx (
     sites_available_mode           => $sites_available_mode,
     require                        => Class['nginx::package'],
     notify                         => Class['nginx::service'],
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
   }
 
   class { 'nginx::service':
@@ -349,12 +263,9 @@ class nginx (
   create_resources('nginx::resource::upstream', $nginx_upstreams)
   create_resources('nginx::resource::vhost', $nginx_vhosts)
   create_resources('nginx::resource::location', $nginx_locations)
-<<<<<<< HEAD
-=======
   create_resources('nginx::resource::mailhost', $nginx_mailhosts)
   create_resources('nginx::resource::map', $string_mappings)
   create_resources('nginx::resource::geo', $geo_mappings)
->>>>>>> 3427ab91609d753446ab8fcfde4ff25cd9c5c290
 
   # Allow the end user to establish relationships to the "main" class
   # and preserve the relationship to the implementation classes through

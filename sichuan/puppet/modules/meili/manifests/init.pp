@@ -28,6 +28,8 @@ class meili (
 
   $group                  = $meili::params::group,
   $user                   = $meili::params::user,
+  $user_ensure                   = $meili::params::user_ensure,
+  $group_ensure                   = $meili::params::group_ensure,
   $user_home           = $meili::params::user_home,
   $user_manage         = hiera('meili::user_manage', $meili::params::user_manage),
   $user_managehome     = hiera('meili::user_managehome', $meili::params::user_managehome),

@@ -8,7 +8,7 @@
 HOME_DIR=/opt/shucaibao
 STATE_FILE=$HOME_DIR/run/sichuan_state
 
-. $HOME_DIR/ci/sichuan/bin/sichuan_functions
+. $HOME_DIR/basin/sichuan/bin/sichuan_functions
 
 
 print_msg "============================================"
@@ -45,9 +45,9 @@ fi
 print_msg "----------> get the latest build bits <----------"
 pushd $HOME_DIR/basin
 if [[ $DEBUG == "true" ]]; then
-  tools/with_venv.sh python sichuan/bin/sichuan_deploy.py --pmt $HOME_DIR/sites/xmt/pmt.yaml --console --verbose
+  tools/with_venv.sh python sichuan/bin/sichuan_deploy.py --pmt $HOME_DIR/skeleton/xmt/pmt.yaml --console --verbose
 else
-  tools/with_venv.sh python sichuan/bin/sichuan_deploy.py --pmt $HOME_DIR/sites/xmt/pmt.yaml
+  tools/with_venv.sh python sichuan/bin/sichuan_deploy.py --pmt $HOME_DIR/skeleton/xmt/pmt.yaml
 fi
 if [ $? -ne 0 ]; then
   system_bad "Failed in sichuan_deploy script."

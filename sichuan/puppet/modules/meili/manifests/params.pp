@@ -29,7 +29,9 @@ class meili::params {
   $user_manage = true
   $user_managehome = true
   $user = 'meili'
-  $group = 'service'
+  $user_ensure = 'present'
+  $group = 'meili'
+  $group_ensure = 'present'
 
   case $::osfamily {
     'Debian': {}

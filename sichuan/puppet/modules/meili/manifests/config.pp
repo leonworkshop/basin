@@ -24,20 +24,20 @@ class meili::config inherits meili {
   }
 
   # syncdb in the first run
-  exec { 'meili_syncdb':
-    command => "${tools_path}/with_venv.sh meili --config=${config_dir}/meili.conf.py syncdb --noinput",
-    path => ['/bin', '/sbin', '/usr/bin', '/usr/local/bin'],
-    cwd => "${root_dir}",
-    require => Exec['init_config'],
-    onlyif => "test ! -f ${root_dir}/first-run"
-  }
+#  exec { 'meili_syncdb':
+#    command => "${tools_path}/with_venv.sh meili --config=${config_dir}/meili.conf.py syncdb --noinput",
+#    path => ['/bin', '/sbin', '/usr/bin', '/usr/local/bin'],
+#    cwd => "${root_dir}",
+#    require => Exec['init_config'],
+#    onlyif => "test ! -f ${root_dir}/first-run"
+#  }
 
   # create superuser in the first run
-  exec { 'meili_create_superuser':
-    command => "${tools_path}/with_venv.sh meili --config=${config_dir}/meili.conf.py createsuperuser --username=admin --email=admin@shucaibao.com --noinput",
-    path => ['/bin', '/sbin', '/usr/bin', '/usr/local/bin'],
-    cwd => "${root_dir}",
-    require => Exec['meili_syncdb'],
-    onlyif => "test ! -f ${root_dir}/first-run"
-  }
+#  exec { 'meili_create_superuser':
+#    command => "${tools_path}/with_venv.sh meili --config=${config_dir}/meili.conf.py createsuperuser --username=admin --email=admin@shucaibao.com --noinput",
+#    path => ['/bin', '/sbin', '/usr/bin', '/usr/local/bin'],
+#    cwd => "${root_dir}",
+#    require => Exec['meili_syncdb'],
+#    onlyif => "test ! -f ${root_dir}/first-run"
+#  }
 }

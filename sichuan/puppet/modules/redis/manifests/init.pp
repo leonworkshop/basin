@@ -122,6 +122,17 @@ class redis (
     redis_saves                   => $redis_saves,
   }
 
+  group { $redis_group:
+      ensure => 'present',
+  }
+  user { $redis_user:
+      ensure => 'present',
+      home => '/home/redis',
+      shell => '/bin/bash',
+      groups => ["$redis_group"],
+      managehome => true
+  }
+
   File {
     owner => $redis_user,
     group => $redis_group

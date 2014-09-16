@@ -28,7 +28,7 @@ class redis::params {
   $redis_slowlog_max_len = 1024
   $redis_password = false
   $redis_saves = ['save 900 1', 'save 300 10', 'save 60 10000']
-  $redis_user = 'root'
-  $redis_group = 'root'
+  $redis_user = 'redis'
+  $redis_group = 'redis'
 
 }

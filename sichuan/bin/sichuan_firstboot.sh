@@ -4,8 +4,6 @@
 # All rights reserved.
 #
 
-set -e
-
 HOME_DIR=/opt/shucaibao
 JUNGAR_SERVER=jungar.internal.shucaibao.com
 STATE_FILE=$HOME_DIR/run/sichuan_state
@@ -76,6 +74,19 @@ export FACTER_oss_host=$OSS_HOST
 puppet_with_retry "/root/bootstrap.pp"
 print_msg "puppet bootstrap is done"
 
+print_msg "----------> Setup shucaibao git repository <----------"
+# setup the git (clone from shucaibao-cd server)
+cd $HOME_DIR/shucaibao
+if [[ $DEBUG != "true" ]]; then
+  git checkout master
+fi
+git pull
+git config --global core.editor "vim"
+git config --global user.email "shucaibao.ci@outlook.com"
+git config --global user.name "Shucaibao"
+print_msg "Setup the git repository: shucaibao/shucaibao"
+
+
 print_msg "----------> Setup basin git repository <----------"
 # setup the git (clone from shucaibao-cd server)
 cd $HOME_DIR/basin
@@ -92,7 +103,7 @@ print_msg "----------> Setup skeleton git repository <----------"
 # setup the git (clone from shucaibao-cd server)
 cd $HOME_DIR/skeleton
 if [[ $DEBUG != "true" ]]; then
-  git checkout deploy
+  git checkout master
 fi
 git pull
 git config --global core.editor "vim"

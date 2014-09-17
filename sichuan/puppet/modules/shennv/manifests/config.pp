@@ -1,20 +1,20 @@
-# == Class meili::config
+# == Class shennv::config
 #
 
-class meili::config inherits meili {
+class shennv::config inherits shennv {
   $tools_path = "$root_dir/tools"
 
   file { "${config_dir}":
     ensure => directory,
-    mode => '0644',
+    mode => '0666',
     owner => $user,
     group => $group,
   }
 
   # initialize the configuration
-  file { "${config_dir}/meili.conf.py":
+  file { "${config_dir}/shennv.conf.py":
     ensure => "${service_ensure}",
-    content => template('meili/meili.conf.py.erb'),
+    content => template('shennv/shennv.conf.py.erb'),
     owner => $user,
     group => $group,
     mode => '0644',

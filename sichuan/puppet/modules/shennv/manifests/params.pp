@@ -1,11 +1,13 @@
-# == Class meili::params
+# == Class shennv::params
 #
 
-class meili::params {
-  $root_dir             = '/opt/meili'
-  $config_dir           = '/opt/meili/meili_conf'
+class shennv::params {
+  $root_dir             = '/opt/shennv'
+  $config_dir           = '/opt/shennv/shennv_conf'
   $source_dir           = '/opt/shucaibao/shucaibao/projects/meili'
-  $start_command        = '/opt/meili/.venv/bin/meili --config=/opt/meili/meili_conf/meili.conf.py start'
+  $mode                 = 'all'  # all, worker, beat
+  $start_worker_command        = '/opt/shennv/.venv/bin/meili --config=/opt/shennv/shennv_conf/shennv.conf.py celery worker'
+  $start_beat_command   = '/opt/shennv/.venv/bin/meili --config=/opt/shennv/shennv_conf/shennv.conf.py celery beat'
 
   $package_name         = 'meili'
   $package_ensure       = 'present'
@@ -14,7 +16,7 @@ class meili::params {
   $service_autorestart  = true
   $service_enable       = true
   $service_ensure       = 'present'
-  $service_name         = 'meili'
+  $service_name         = 'shennv'
   $service_manage       = true
   $service_startsecs    = 10
   $service_retries      = 99
@@ -25,12 +27,12 @@ class meili::params {
   $service_stopasgroup    = true
   $service_stopsignal     = 'INT'
 
-  $user_home = '/home/meili'
+  $user_home = '/home/shennv'
   $user_manage = true
   $user_managehome = true
-  $user = 'meili'
+  $user = 'shennv'
   $user_ensure = 'present'
-  $group = 'meili'
+  $group = 'shennv'
   $group_ensure = 'present'
 
   case $::osfamily {
@@ -42,7 +44,7 @@ class meili::params {
 
   case $::kernel {
     'Linux': {
-      $package_dir = '/opt/meili/swdl'
+      $package_dir = '/opt/shennv/swdl'
     }
     default: {
       fail("\"${module_name}\" provides no config directory default value for \"${::kernel}\"")

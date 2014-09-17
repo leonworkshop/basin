@@ -7,16 +7,16 @@ class meili::install inherits meili {
   $rootdir = "${root_dir}"
 
   # setup virtualenv
-#  python::virtualenv { '/opt/meili':
-#      ensure => present,
-#      version => 'system',
-#      requirements => '/opt/meili/requirements.txt',
-#      venv_dir => '/opt/meili/.venv',
-#      cwd => '/opt/meili',
-#      owner => "${user}",
-#      group => "${group}",
-#      timeout => 300
-#  }
+  python::virtualenv { '/opt/meili':
+      ensure => present,
+      version => 'system',
+      requirements => '/opt/meili/requirements.txt',
+      venv_dir => '/opt/meili/.venv',
+      cwd => '/opt/meili',
+      owner => "${user}",
+      group => "${group}",
+      timeout => 300
+  }
 
 #  exec { 'setup-virtualenv':
 #    command => "python ${tools_path}/install_venv.py",
@@ -29,7 +29,7 @@ class meili::install inherits meili {
     path => ['/bin', '/sbin', '/usr/bin', '/usr/local/bin'],
     cwd => "${root_dir}",
 #    require => Exec['setup-virtualenv'],
-#    require => Python::Virtualenv['/opt/meili'],
+    require => Python::Virtualenv['/opt/meili'],
   }
 
   file { "${tools_path}/with_venv.sh":

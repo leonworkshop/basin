@@ -2,6 +2,8 @@
 #
 class meili (
   $version                    = false,
+  $rds_host                   = 'rdsejmeynzn3yvu.mysql.rds.aliyuncs.com',
+  $rds_port                   = 3306,
   $package_name               = $meili::params::package_name,
   $package_ensure             = $meili::params::package_ensure,
   $package_url                = undef,

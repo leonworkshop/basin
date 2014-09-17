@@ -1,0 +1,60 @@
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import os
+
+from meili.conf.server import *
+
+BASE_DIR = os.path.dirname(__file__)
+
+DATABASES = {
+        'default': {
+                'ENGINE': 'django.db.backends.mysql',
+                'HOST': '<%= scope.lookupvar('meili::rds_host') %>',
+                'PORT': '<%= scope.lookupvar('meili::rds_port') %>',
+                'NAME': 'meili_db',
+                'USER': 'meili',
+                'PASSWORD': 'rds_meil1',
+                'OPTIONS': {
+                    'autocommit': True,
+                },
+        }
+}
+
+SECRET_KEY = 'CGU8pVbQAe7t/jnxIPg9o6pHlRC8yEg40kIOxARxCz0/ujVJB4P9og=='
+
+############### WebServer ##################
+# If you're using a reverse proxy, you should enable the X-Forwarded-Proto
+# and X-Forwarded-Host headers, and uncomment the following settings
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# USE_X_FORWARDED_HOST = True
+
+MEILI_WEB_HOST = '127.0.0.1'
+MEILI_WEB_PORT = 9000
+MEILI_WEB_OPTIONS = {
+    'workers': 3,  # the number of gunicorn workers
+    'secure_scheme_headers': {'X-FORWARDED-PROTO': 'https'},
+    'pidfile': os.path.join(BASE_DIR, 'gunicorn.pid'),
+}
+
+############# Redis #############
+
+# Generic Redis configuration used as defaults for various things including:
+# Buffers, Quotas, TSDB
+
+SENTRY_REDIS_OPTIONS = {
+    'hosts': {
+        0: {
+            'host': '<%= scope.lookupvar('shennv::redis_host') %>',
+            'port': <%= scope.lookupvar('shennv::redis_port') %>,
+        }
+    }
+}
+
+CELERY_ALWAYS_EAGER = False
+BROKER_URL = 'redis://<%= scope.lookupvar('shennv::redis_host') %>:<%= scope.lookupvar('shennv::redis_port') %>'
+
+########### Yulong ##############
+# Yulong options
+YULONG_PROVIDER_MANAGER = 'yulong.providers.manager.DigitalAssetProviderManager'
+YULONG_OPTIONS = {
+    'conf_file': os.path.join(BASE_DIR, '../conf/yulong.yaml'),
+}

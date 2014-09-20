@@ -58,3 +58,41 @@ YULONG_PROVIDER_MANAGER = 'yulong.providers.manager.DigitalAssetProviderManager'
 YULONG_OPTIONS = {
     'conf_file': os.path.join(BASE_DIR, '../conf/yulong.yaml'),
 }
+
+########### Emei ##############
+EMEI_STORAGE_SERVICE = 'emei.storage_services.manager.StorageServiceManager'
+EMEI_OPTIONS = {
+    'provider_info': {
+        'provider': 'aliyun',
+        'provider_url': 'alinyuncs.com',
+        'provider_protocol': 'http',
+        'access_key_id': '<%= scope.lookupvar('meili::aliyun_access_id') %>',
+        'access_key_secret': '<%= scope.lookupvar('meili::aliyun_access_key') %>',
+        'nosql': {
+            'enable': True,
+            'instances': [
+                {'name': '<%= scope.lookupvar('meili::ots_instance_name') %>',
+                 'region': '<%= scope.lookupvar('meili::ots_instance_region') %>',
+                }
+            ]
+        },
+        'blob': {
+            'enable': True,
+            'instances': [
+                {'name': '<%= scope.lookupvar('meili::oss_instance_name') %>',
+                 'region': '<%= scope.lookupvar('meili::oss_instance_region') %>',
+                }
+            ]
+        },
+        'message': {
+            'enable': True,
+            'instances': [
+                {'name': '<%= scope.lookupvar('meili::mqs_instance_name') %>',
+                 'region': '<%= scope.lookupvar('meili::mqs_instance_region') %>',
+                 'owner_id': '<%= scope.lookupvar('meili::mqs_instance_owner_id') %>',
+                }
+            ]
+        }
+    }
+}
+

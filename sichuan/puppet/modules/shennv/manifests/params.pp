@@ -6,8 +6,8 @@ class shennv::params {
   $config_dir           = '/opt/shennv/shennv_conf'
   $source_dir           = '/opt/shucaibao/shucaibao/projects/meili'
   $mode                 = 'all'  # all, worker, beat
-  $start_worker_command        = '/opt/shennv/.venv/bin/meili --config=/opt/shennv/shennv_conf/shennv.conf.py celery worker'
-  $start_beat_command   = '/opt/shennv/.venv/bin/meili --config=/opt/shennv/shennv_conf/shennv.conf.py celery beat'
+  $start_worker_command        = '/opt/shennv/.venv/bin/meili --config=/opt/shennv/shennv_conf/shennv.conf.py celery worker -l INFO'
+  $start_beat_command   = '/opt/shennv/.venv/bin/meili --config=/opt/shennv/shennv_conf/shennv.conf.py celery beat -l INFO'
 
   $package_name         = 'meili'
   $package_ensure       = 'present'

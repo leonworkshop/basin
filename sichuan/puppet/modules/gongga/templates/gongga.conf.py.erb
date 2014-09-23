@@ -88,8 +88,8 @@ EMEI_OPTIONS = {
             'enable': True,
             'owner_id': '<%= scope.lookupvar('meili::mqs_instance_owner_id') %>',
             'instances': [
-                {'name': '<%= scope.lookupvar('meili::mqs_instance_name') %>',
-                 'region': '<%= scope.lookupvar('meili::mqs_instance_region') %>',
+                {'region': '<%= scope.lookupvar('meili::mqs_instance_region') %>',
+                 'name': '<%= scope.lookupvar('meili::mqs_instance_name') %>',
                 }
             ]
         }

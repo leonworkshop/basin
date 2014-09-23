@@ -67,6 +67,7 @@ run_with_retry "puppet module install puppetlabs-concat"
 run_with_retry "puppet module install puppetlabs-apt"
 run_with_retry "puppet module install maestrodev-wget"
 run_with_retry "puppet module install puppetlabs-gcc"
+run_with_retry "puppet module install stankevich-python"
 print_msg "install puppet modules"
 
 export FACTER_oss_access_id=$OSS_ACCESS_ID

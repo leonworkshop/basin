@@ -48,7 +48,7 @@ EMEI_STORAGE_SERVICE = 'emei.storage_services.manager.StorageServiceManager'
 EMEI_OPTIONS = {
     'provider_info': {
         'provider': 'aliyun',
-        'provider_url': 'alinyuncs.com',
+        'provider_url': 'aliyuncs.com',
         'provider_protocol': 'http',
         'access_key_id': '<%= scope.lookupvar('meili::aliyun_access_id') %>',
         'access_key_secret': '<%= scope.lookupvar('meili::aliyun_access_key') %>',
@@ -70,13 +70,16 @@ EMEI_OPTIONS = {
         },
         'message': {
             'enable': True,
+            'owner_id': '<%= scope.lookupvar('meili::mqs_instance_owner_id') %>',
             'instances': [
                 {'name': '<%= scope.lookupvar('meili::mqs_instance_name') %>',
                  'region': '<%= scope.lookupvar('meili::mqs_instance_region') %>',
-                 'owner_id': '<%= scope.lookupvar('meili::mqs_instance_owner_id') %>',
                 }
             ]
         }
     }
 }
 
+EMEI_NOSQL_INSTANCE_NAME = '<%= scope.lookupvar('meili::ots_instance_name') %>
+EMEI_MESSAGE_QUEUE_NAME  = '<%= scope.lookupvar('meili::mqs_instance_name') %>
+EMEI_BLOB_INSTANCE_NAME  = '<%= scope.lookupvar('meili::oss_instance_name') %>

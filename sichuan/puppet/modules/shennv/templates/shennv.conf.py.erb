@@ -40,7 +40,7 @@ MEILI_WEB_OPTIONS = {
 # Generic Redis configuration used as defaults for various things including:
 # Buffers, Quotas, TSDB
 
-SENTRY_REDIS_OPTIONS = {
+MEILI_REDIS_OPTIONS = {
     'hosts': {
         0: {
             'host': '<%= scope.lookupvar('shennv::redis_host') %>',
@@ -51,6 +51,7 @@ SENTRY_REDIS_OPTIONS = {
 
 CELERY_ALWAYS_EAGER = False
 BROKER_URL = 'redis://<%= scope.lookupvar('shennv::redis_host') %>:<%= scope.lookupvar('shennv::redis_port') %>'
+CELERY_RESULT_BACKEND = 'redis://<%= scope.lookupvar('shennv::redis_host') %>:<%= scope.lookupvar('shennv::redis_port') %>'
 
 ########### Yulong ##############
 # Yulong options
@@ -96,6 +97,6 @@ EMEI_OPTIONS = {
     }
 }
 
-EMEI_NOSQL_INSTANCE_NAME = '<%= scope.lookupvar('meili::ots_instance_name') %>
-EMEI_MESSAGE_QUEUE_NAME  = '<%= scope.lookupvar('meili::mqs_instance_name') %>
-EMEI_BLOB_INSTANCE_NAME  = '<%= scope.lookupvar('meili::oss_instance_name') %>
+EMEI_NOSQL_INSTANCE_NAME = '<%= scope.lookupvar('meili::ots_instance_name') %>'
+EMEI_MESSAGE_QUEUE_NAME  = '<%= scope.lookupvar('meili::mqs_instance_name') %>'
+EMEI_BLOB_INSTANCE_NAME  = '<%= scope.lookupvar('meili::oss_instance_name') %>'

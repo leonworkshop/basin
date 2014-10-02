@@ -11,7 +11,7 @@ class meili (
   $oss_instance_name          = 'alihzoss0001',
   $oss_instance_region        = 'cn-hangzhou',
   $mqs_instance_owner_id      = 'e2x86rc97q',
-  $mqs_instance_name          = 'ALIHAMQS0001',
+  $mqs_instance_name          = 'ALIHZMQS0001',
   $mqs_instance_region        = 'cn-hangzhou',
 
   $package_name               = $meili::params::package_name,

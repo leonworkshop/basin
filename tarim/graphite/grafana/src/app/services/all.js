@@ -1,0 +1,18 @@
+define([
+  './alertSrv',
+  './datasourceSrv',
+  './timeSrv',
+  './templateSrv',
+  './templateValuesSrv',
+  './panelSrv',
+  './timer',
+  './panelMove',
+  './keyboardManager',
+  './annotationsSrv',
+  './playlistSrv',
+  './unsavedChangesSrv',
+  './dashboard/dashboardKeyBindings',
+  './dashboard/dashboardSrv',
+  './dashboard/dashboardViewStateSrv',
+],
+function () {});

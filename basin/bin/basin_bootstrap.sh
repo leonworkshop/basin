@@ -12,18 +12,6 @@ HOME_DIR=/opt/shucaibao/
 STATE_FILE=$HOME_DIR/run/basin_state
 ADMIN=shucaibao
 
-function prompt_notice {
-  read -p "$1" yn
-}
-
-function get_state {
-  if [ ! -f $STATE_FILE ]; then
-    echo 'init'
-  else
-    state=`cat $STATE_FILE | awk '{print substr($0, 8)}'`
-    echo $state
-  fi
-}
 
 echo "============================================"
 echo ""
@@ -31,13 +19,12 @@ echo "    shucaibao CI Bootstrap"
 echo ""
 echo "============================================"
 
-echo "----------> Install the bundles <----------"
-
-state=$(get_state)
-if [ $state != "init" ]; then
-  echo "CI server is already bootstrapped."
+state=$(get_system_state)
+if [[ $state != "system_bootstrap" ]]; then
+  print_msg "This node is already bootstrapped."
   exit 0
 fi
+
 
 # Generate the first boot ready file
 #echo "state: in progress" > $STATE_FILE

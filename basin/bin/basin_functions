@@ -11,8 +11,12 @@ BASIN_SENDSTATS=$HOME_DIR/basin/basin/bin/basin_sendstats.py
 STATE_FILE=$HOME_DIR/run/sichuan_state
 
 print_msg () {
-  logger -p local7.info -t 'sichuan' \"$1\"
+  logger -p local7.info -t 'basin' \"$1\"
   echo "$1"
+}
+
+function prompt_notice {
+  read -p "$1" yn
 }
 
 get_system_state () {

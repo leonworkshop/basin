@@ -117,7 +117,7 @@ print_msg "Setup the git repository: shucaibao/skeleton"
 print_msg "----------> Setup hostname <----------"
 cd $HOME_DIR/basin
 hostname=`cat /etc/hostname`
-tools/with_venv.sh python bin/basin_sethosts.py --verbose --console --boot --ecs_name $hostname --template conf/hosts.tpl
+tools/with_venv.sh python basin/bin/basin_sethosts.py --verbose --console --boot --ecs_name $hostname --template conf/hosts.tpl
 if [ $? -ne 0 ]; then
   system_bad "Failed to add host alias."
   exit 1

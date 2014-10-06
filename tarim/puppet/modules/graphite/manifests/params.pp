@@ -27,6 +27,7 @@ class graphite::params {
   $install_prefix = '/opt/'
   $enable_carbon_relay = false
   $nginxconf_dir = '/etc/nginx/sites-available'
+  $root_dir = '/opt/graphite'
 
 
   case $::osfamily {

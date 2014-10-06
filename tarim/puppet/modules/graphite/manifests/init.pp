@@ -288,7 +288,7 @@
 # [*gr_ldap_user_query*]
 #   Set ldap user query.  Default = '(username=%s)'
 # [*gr_ldap_options*]
-#   Hash of additional LDAP options to be enabled. 
+#   Hash of additional LDAP options to be enabled.
 #   For example, { 'ldap.OPT_X_TLS_REQUIRE_CERT' => 'ldap.OPT_X_TLS_ALLOW' }
 #   Default = { }
 # [*gr_use_remote_user_auth*]
@@ -367,7 +367,7 @@ class graphite (
       method => 'average'
     }
   },
-  $gr_web_server                = 'apache',
+  $gr_web_server                = 'wsgionly',
   $gr_web_servername            = $::fqdn,
   $gr_web_group                 = undef,
   $gr_web_user                  = undef,
@@ -463,6 +463,7 @@ class graphite (
   # the composite class.
   # https://projects.puppetlabs.com/projects/puppet/wiki/Anchor_Pattern
   anchor { 'graphite::begin':}->
+  class { 'graphite::deps':}->
   class { 'graphite::install':}~>
   class { 'graphite::config':}->
   anchor { 'graphite::end':}

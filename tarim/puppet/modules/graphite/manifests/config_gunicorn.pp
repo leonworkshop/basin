@@ -13,13 +13,15 @@ class graphite::config_gunicorn inherits graphite::params {
 
   if $::osfamily == 'debian' {
 
-    package {
-      'gunicorn':
+# commit it out because gunicorn package is already declared in
+# /etc/puppet/modules/python/manifests/install.pp
+#
+    package { 'gunicorn':
         ensure => installed,
         before => Exec['Chown graphite for web user'],
         notify => Exec['Chown graphite for web user'];
     }
-  
+
     service {
       'gunicorn':
         ensure     => running,
@@ -33,9 +35,9 @@ class graphite::config_gunicorn inherits graphite::params {
           Exec['Chown graphite for web user']
         ];
     }
-  
+
     # Deploy configfiles
-  
+
     file {
       '/etc/gunicorn.d/graphite':
         ensure  => file,

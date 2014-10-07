@@ -92,5 +92,13 @@ nginx::resource::vhost { 'tarim.shucaibao.com':
     client_body_timeout => '5s',
     client_max_body_size => '150k',
     proxy => 'http://unix:/var/run/graphite.sock:/',
-#    proxy => 'http://127.0.0.1:9090',
+}
+
+class { 'statsd':
+    graphiteserver   => '0.0.0.0',
+    flushinterval    => 10000, # flush every 10 second
+    percentthreshold => [75, 90, 99],
+    address          => '0.0.0.0',
+    listenport       => 8125,
+    provider         => npm,
 }

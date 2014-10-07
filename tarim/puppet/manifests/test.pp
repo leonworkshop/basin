@@ -1,10 +1,27 @@
 
-#class { 'python':
-#  pip        => true,
-#  dev        => true,
-#  virtualenv => true,
-#  gunicorn   => true,
-#}
+$es_init_config_hash = {
+    'ES_USER' => 'elasticsearch',
+    'ES_GROUP' => 'elasticsearch',
+    'ES_HOME'  => '/opt/elasticserach',
+}
+
+class { 'elasticsearch':
+    ensure                      => 'present',
+    autoupgrade                 => true,
+    elasticsearch_user          => 'elasticsearch',
+    elasticsearch_group         => 'elasticsearch',
+    purge_package_dir           => true,
+    init_defaults               => $es_init_config_hash,
+    config => { 'cluster.name' => 'tarim.cluster.test' },
+    datadir                     => '/alidata1/elasticsearch/data',
+    version                     => '1.3.4',
+}
+
+elasticsearch::instance { 'es-node-0':
+    ensure                      => 'present',
+    config => { 'node.name'     => 'tarim.node.test.0' },
+}
+
 
 class { 'graphite':
     gr_max_cache_size           => 256,

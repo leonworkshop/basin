@@ -11,20 +11,23 @@
 class graphite::deps inherits graphite::params {
   $root_dir = $::graphite::params::root_dir
 
-  python::virtualenv { $root_dir: } ->
+#  python::virtualenv { "$root_dir/.venv": } ->
   python::pip { [
     'gunicorn',
-    'twisted==11.1.0',
-    'django==1.4.10',
-    'django-tagging==0.3.1',
-    'python-memcached==1.47',
+    'Twisted>=11.1.0',
+    'tagging>=0.2.1',
+    'django==1.5.9',
+    'django-tagging>=0.3.1',
+    'daemonize>=2.3.1',
+    'python-memcached>=1.47',
     'simplejson==2.1.6',
     'python-openid',
     'python-oauth2',
     "django-stronghold==0.2.6",
     "python-social-auth",
   ]:
-    virtualenv => $root_dir,
+#    virtualenv => "$root_dir/.venv",
+    timeout => 3000,
   }
 
   ensure_packages(['python-cairo'])
@@ -33,7 +36,7 @@ class graphite::deps inherits graphite::params {
     ensure  => link,
     target  => '/usr/lib/python2.7/dist-packages/cairo',
     require => [
-      Python::Virtualenv[$root_dir],
+#      Python::Virtualenv["$root_dir/.venv"],
       Package['python-cairo'],
     ],
   }

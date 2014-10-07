@@ -18,7 +18,8 @@ except:
 from time import sleep, time
 from twisted.python.util import initgroups
 from twisted.scripts.twistd import runApp
-from twisted.scripts._twistd_unix import daemonize
+#from twisted.scripts._twistd_unix import daemonize
+import daemonize
 
 
 daemonize = daemonize  # Backwards compatibility

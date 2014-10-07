@@ -12,25 +12,26 @@
 # Description: Enables Graphites carbon-relay data routing engine
 ### END INIT INFO
 
+PYBIN=python
 case "$1" in
-	start)
-		python /opt/graphite/bin/carbon-relay.py start
-		;;
-	stop)
-		python /opt/graphite/bin/carbon-relay.py stop
-		;;
-	status)
-		python /opt/graphite/bin/carbon-relay.py status
-		;;
-	restart)
-		$0 stop ; sleep 3 ; $0 start
-		RC=$?
-		exit $RC
-		;;
-	*)
-		echo "Usage: $0 {start|stop|restart|status}"
-		exit 1
-		;;
+start)
+    $PYBIN /opt/graphite/bin/carbon-relay.py start
+    ;;
+stop)
+    $PYBIN /opt/graphite/bin/carbon-relay.py stop
+    ;;
+status)
+    $PYBIN /opt/graphite/bin/carbon-relay.py status
+    ;;
+restart)
+    $0 stop ; sleep 3 ; $0 start
+    RC=$?
+    exit $RC
+    ;;
+*)
+    echo "Usage: $0 {start|stop|restart|status}"
+    exit 1
+    ;;
 esac
 
 exit

@@ -2,7 +2,7 @@
 :backends:
   - yaml
 :yaml:
-  :datadir: '/etc/puppet/hieradata/infra'
+  :datadir: "/etc/puppet/hieradata/%{environment}"
 :hierarchy:
   - "nodes/%{::fqdn}"
   - common

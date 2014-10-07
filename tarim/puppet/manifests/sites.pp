@@ -22,8 +22,7 @@ file { '/alidata1/graphite':
 
 file { '/opt/graphite':
   ensure => link,
-  target => '/alidata1/graphite",
-  require => File['/alidata1/graphite'],
+  target => '/alidata1/graphite',
 }
 
 file { '/alidata1/log':

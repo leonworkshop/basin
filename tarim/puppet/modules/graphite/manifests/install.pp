@@ -24,7 +24,7 @@ class graphite::install(
   }
 
   exec { "Install graphite-carbon from cloned git source":
-    command   => "${root_dir}/bin/python setup.py install",
+    command   => "/opt/graphite/bin/python setup.py install",
     creates   => "${root_dir}/bin/carbon-aggregator.py",
     cwd       => "/opt/shucaibao/basin/tarim/graphite/carbon",
     logoutput => true,
@@ -32,7 +32,7 @@ class graphite::install(
   }
 
   exec { "Install graphite-web from cloned git source":
-    command   => "${root_dir}/bin/python setup.py install",
+    command   => "/opt/graphite/bin/python setup.py install",
     creates   => "${root_dir}/webapp/graphite",
     cwd       => "/opt/shucaibao/basin/tarim/graphite/web",
     logoutput => true,

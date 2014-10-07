@@ -24,10 +24,10 @@ sudoers::allowed_command { "$ADMIN":
 # The CI git hook to trigger basin_papply.sh
 file { "$HOME_DIR/basin/.git/hooks/post-merge":
   ensure  => present,
-  content => '
+  content => "
 logger Merged new change \$1, do basin_papply.sh
 exec sudo $HOME_DIR/basin/basin/bin/basin_papply.sh -l /var/log/shucaibao/basin_papply
-',
+",
   mode    => '755',
 }
 

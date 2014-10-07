@@ -46,7 +46,7 @@ print_msg "install puppet"
 echo "---------> Install apt bundles <---------"
 apt-get install git openjdk-7-jdk lpr curl htop monit vim-nox supervisor -y
 apt-get install python-cairo maven libffi-dev build-essential python-dev -y
-apt-get install python-pip libffi-dev -y
+apt-get install python-pip libffi-dev python-twisted-core -y
 
 # install python virtualenv
 run_with_retry "/usr/local/bin/pip install --upgrade pip"
@@ -79,6 +79,7 @@ puppet module install theforeman-git
 puppet module install puppetlabs-nodejs
 puppet module install phinze-sudoers
 puppet module install saz-rsyslog
+puppet module install puppetlabs-concat
 print_msg "install puppet modules"
 
 # clean up firstly

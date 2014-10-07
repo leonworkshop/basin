@@ -14,7 +14,8 @@ class { 'elasticsearch':
     init_defaults               => $es_init_config_hash,
     config => { 'cluster.name' => 'tarim.cluster.test' },
     datadir                     => '/alidata1/elasticsearch/data',
-    version                     => '1.3.4',
+#    version                     => '1.3.4',
+    package_url                 => "https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.4.deb"
 }
 
 elasticsearch::instance { 'es-node-0':

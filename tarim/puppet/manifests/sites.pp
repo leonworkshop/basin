@@ -15,6 +15,11 @@ create_resources('nginx::resource::vhost', $nginx_vhosts)
 $nginx_locations = hiera('nginx::resource::location', {})
 create_resources('nginx::resource::location', $nginx_locations)
 
+# elasticsearch instance resources
+$es_instances = hiera('elasticsearch::instance', {})
+create_resources('elasticsearch::instance', $es_instances)
+
+
 # misc tarim configuration
 file { '/alidata1/graphite':
   ensure => directory,

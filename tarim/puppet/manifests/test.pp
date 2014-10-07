@@ -98,7 +98,7 @@ nginx::resource::vhost { 'tarim.shucaibao.com':
     ssl_cert => "/opt/shucaibao/certs/shucaibao.com.crt",
     ssl_key => "/opt/shucaibao/certs/shucaibao.com.key",
     listen_ip => '115.28.40.5',
-    listen_port => '4433',
+#    listen_port => '4433',
     proxy_set_header => [
         'Host   $http_host',
         'X-Real-IP  $remote_addr',
@@ -112,6 +112,16 @@ nginx::resource::vhost { 'tarim.shucaibao.com':
     proxy => 'http://unix:/var/run/graphite.sock:/',
 }
 
+nginx::resource::vhost { 'grafana.shucaibao.com':
+    ensure => 'present',
+    ssl => false,
+    listen_ip => '115.28.40.5',
+    listen_port => '8001',
+    www_root    => "/opt/grafana-1.8.1",
+    index_files => ['index.html']
+}
+
+
 class { 'statsd':
     graphiteserver   => '0.0.0.0',
     flushinterval    => 10000, # flush every 10 second
@@ -120,3 +130,22 @@ class { 'statsd':
     listenport       => 8125,
     provider         => npm,
 }
+
+class { 'grafana':
+    install_method => 'archive',
+    version => '1.8.1',
+
+    datasources  => {
+        'graphite' => {
+          'type'    => 'graphite',
+          'url'     => 'http://115.28.40.5:80',
+          'default' => 'true'
+        },
+        'elasticsearch' => {
+          'type'      => 'elasticsearch',
+          'url'       => 'http://localhost:9200',
+          'index'     => 'grafana-dash',
+          'grafanaDB' => 'true',
+        },
+    }
+  }

@@ -80,6 +80,7 @@ puppet module install puppetlabs-nodejs
 puppet module install phinze-sudoers
 puppet module install saz-rsyslog
 puppet module install puppetlabs-concat
+puppet module install gini-archive
 print_msg "install puppet modules"
 
 # clean up firstly

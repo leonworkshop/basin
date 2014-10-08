@@ -57,13 +57,13 @@ class sichuan (
   }
 
   # cron-job to update server state to tarim
-#  cron { 'server-state-update':
-#    ensure => $server_ensure,
-#    command => "/usr/local/bin/server-state-update",
-#    user => 'root',
-#    minute => '*/10',
-#    require => File['/usr/local/bin/server-state-update'],
-#  }
+  cron { 'server-state-update':
+    ensure => $server_ensure,
+    command => "/usr/local/bin/server-state-update",
+    user => 'root',
+    minute => '*/10',
+    require => File['/usr/local/bin/server-state-update'],
+  }
 
   # cron-job to pull basin and skeleton repos
   cron { 'basin-git-pull':
@@ -81,7 +81,7 @@ class sichuan (
   }
 
   # The CI git hook to trigger sichuan_apply
-#  file { "$home_dir/ci/.git/hooks/post-merge":
+#  file { "$home_dir/basin/.git/hooks/post-merge":
 #    ensure  => $service_ensure,
 #    content => '
 #logger Merged new change \$1, do sichuan-apply

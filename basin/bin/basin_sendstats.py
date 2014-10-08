@@ -27,7 +27,6 @@ from pylib.common import log
 """
 Global options
 """
-opts = {}
 statsd_client = None
 valid_metrics = [{'name': 'deploy.server.state',
                   'type': 'gauge'
@@ -120,9 +119,9 @@ def prepare():
   # initialize statsdclient
   global statsd_client
 
-  statsd_client = StatsClient(host=opts['server'], port=opts['port'],
-                              prefix=(opts['prefix'] + "." + opts['source']
-                                      if opts['prefix'] is not None else opts['source']))
+  statsd_client = StatsClient(host=args['server'], port=args['port'],
+                              prefix=(args['prefix'] + "." + args['source']
+                                      if args['prefix'] is not None else args['source']))
   return (args, metric_def)
 
 
@@ -143,8 +142,8 @@ def main():
     log.error("Error happens during stats aggregation: %s", e.message)
     raise e
   finally:
-    if 'pidfile' in opts and os.path.exists(opts['pidfile']):
-      os.unlink(opts['pidfile'])
+    if args.pidfile and os.path.exists(args['pidfile']):
+      os.unlink(args['pidfile'])
 
   return 0
 

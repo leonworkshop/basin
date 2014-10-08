@@ -1,4 +1,3 @@
-
 class { 'nginx':
   service_ensure => 'running',
   keepalive_timeout => 0,
@@ -33,6 +32,14 @@ nginx::resource::location { '/api/':
     ssl => true,
     ssl_only => true,
     proxy => 'http://127.0.0.1:9000/api/',
+}
+
+nginx::resource::location { '/status/':
+    ensure => 'present',
+    vhost => "api.shucaibao.com",
+    stub_status => true,
+    location_allow   => ['127.0.0.1'],
+    location_deny    => ['all'],
 }
 
 class { 'redis':

@@ -134,16 +134,19 @@ def send_stats_data(args, metric_name, metric_value, metric_type):
 
 
 def main():
+  pidfile = '/opt/shucaibao/run/stats.pid'
   try:
     (args, metric_def) = prepare()
+    if args.pid is not None:
+        pidfile = args.pid
     send_stats_data(args, metric_def['name'],
                     metric_def['value'], metric_def['type'])
   except exp.ShucaibaoException as e:
     log.error("Error happens during stats aggregation: %s", e.message)
     raise e
   finally:
-    if args.pidfile and os.path.exists(args['pidfile']):
-      os.unlink(args['pidfile'])
+    if os.path.exists(pidfile):
+      os.unlink(pidfile)
 
   return 0
 

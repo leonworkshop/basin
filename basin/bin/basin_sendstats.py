@@ -119,16 +119,16 @@ def prepare():
   # initialize statsdclient
   global statsd_client
 
-  statsd_client = StatsClient(host=args['server'], port=args['port'],
-                              prefix=(args['prefix'] + "." + args['source']
-                                      if args['prefix'] is not None else args['source']))
+  statsd_client = StatsClient(host=args.server, port=args.port,
+                              prefix=(args.prefix + "." + args.source
+                                      if args.prefix is not None else args.source))
   return (args, metric_def)
 
 
 def send_stats_data(args, metric_name, metric_value, metric_type):
   log.info("%s send metric [%s] with value [%s] to %s:%d",
-           args['source'], metric_name, metric_value,
-           args['server'], args['port'])
+           args.source, metric_name, metric_value,
+           args.server, args.port)
   if metric_type == 'gauge':
     statsd_client.gauge(metric_name, int(metric_value))
 

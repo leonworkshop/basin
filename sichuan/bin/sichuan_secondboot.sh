@@ -30,16 +30,16 @@ if [[ $DEBUG != "true" ]]; then
   fi
 fi
 
-#pushd $HOME_DIR
-#run_with_retry "wget http://collectd.org/files/collectd-5.4.1.tar.gz"
-#tar xvf collectd-5.4.1.tar.gz
-#cd collectd-5.4.1
-#./configure --prefix=/usr --sysconfdir=/etc/collectd --localstatedir=/var --libdir=/usr/lib --mandir=/usr/share/man --enable-all-plugins
-#make all install
-#cd ..
-#rm -rf collectd-5.4.1*
-#print_msg "install collectd"
-#popd
+pushd $HOME_DIR
+run_with_retry "wget http://collectd.org/files/collectd-5.4.1.tar.gz"
+tar xvf collectd-5.4.1.tar.gz
+cd collectd-5.4.1
+./configure --prefix=/usr --sysconfdir=/etc/collectd --localstatedir=/var --libdir=/usr/lib --mandir=/usr/share/man --enable-all-plugins
+make all install
+cd ..
+rm -rf collectd-5.4.1*
+print_msg "install collectd"
+popd
 
 
 print_msg "----------> get the latest build bits <----------"

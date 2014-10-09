@@ -8,7 +8,7 @@
 
 HOME_DIR=/opt/shucaibao
 BASIN_SENDSTATS=$HOME_DIR/basin/basin/bin/basin_sendstats.py
-STATE_FILE=$HOME_DIR/run/sichuan_state
+STATE_FILE=$HOME_DIR/run/basin_state
 
 print_msg () {
   logger -p local7.info -t 'basin' \"$1\"

@@ -152,6 +152,4 @@ def main():
 
 
 if __name__ == '__main__':
-  start_time = time.time()
   main()
-  log.info("--- Finished in %.4f seconds ---", (time.time() - start_time))

@@ -1,7 +1,7 @@
 class statsd::params {
   $graphiteserver   = 'localhost'
   $graphiteport     = '2003'
-  $backends         = [ './backends/graphite' ]
+  $backends         = [ '/usr/lib/node_modules/statsd/backends/graphite.js' ]
   $address          = '0.0.0.0'
   $listenport       = '8125'
   $flushinterval    = '10000'
@@ -37,7 +37,7 @@ class statsd::params {
             fail('Unsupported provider')
           }
         }
-      } 
+      }
       else {
         $statsjs = "${node_module_dir}/statsd/stats.js"
       }

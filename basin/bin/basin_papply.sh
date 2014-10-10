@@ -8,6 +8,8 @@
 HOME_DIR=/opt/shucaibao
 PAPPLY_CRON='CI-papply'
 
+. $HOME_DIR/basin/basin/bin/basin_functions
+
 # Interval to run papply with check, minute
 INTERVAL=5
 
@@ -52,12 +54,15 @@ echo $$ > $PIDFILE
 
 export CI_ROOT=$HOME_DIR/basin
 
+# Move to config-inprogress state
+config_inprogress "In progress of basin-apply execution"
+
 # Remove the cron job by puppet, we only need the papply to be run once
 puppet apply --detailed-exitcodes -e "
   # puppet script
   cron { '$PAPPLY_CRON':
     ensure  => absent,
-    command => '/bin/bash $HOME_DIR/ci/bin/basin_papply.sh $@',
+    command => '/bin/bash $HOME_DIR/basin/basin/bin/basin_papply.sh $@',
     user    => 'root',
     minute  => '*/$INTERVAL',
   }"
@@ -80,3 +85,6 @@ echo Puppet apply Tarim setting...
 #/bin/bash $CI_ROOT/jungar/bin/papply.sh $@
 
 rm $PIDFILE
+
+system_ready "completed the last basin-apply execution"
+exit 0

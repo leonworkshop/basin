@@ -12,7 +12,7 @@ nginx::resource::vhost { 'api.shucaibao.com':
     ssl_cert => "/opt/shucaibao/certs/shucaibao.com.crt",
     ssl_key => "/opt/shucaibao/certs/shucaibao.com.key",
     listen_ip => '115.28.40.5',
-    listen_port => '443',
+    listen_port => '8088',
     proxy_set_header => [
         'Host   $http_host',
         'X-Real-IP  $remote_addr',
@@ -34,12 +34,12 @@ nginx::resource::location { '/api/':
     proxy => 'http://127.0.0.1:9000/api/',
 }
 
-nginx::resource::location { '/status/':
+nginx::resource::location { '/status':
     ensure => 'present',
     vhost => "api.shucaibao.com",
     stub_status => true,
-    location_allow   => ['127.0.0.1'],
-    location_deny    => ['all'],
+#    location_allow   => ['127.0.0.1'],
+#    location_deny    => ['all'],
 }
 
 class { 'redis':

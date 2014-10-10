@@ -7,4 +7,4 @@ logger -t "sichuan" "Update /etc/hosts file"
 
 HOME_DIR=<%= scope.lookupvar('sichuan::home_dir') %>
 cd $HOME_DIR/basin
-tools/with_venv.sh python bin/basin_sethosts.py --template $HOME_DIR/basin/conf/hosts.tpl
+tools/with_venv.sh python basin/bin/basin_sethosts.py --template $HOME_DIR/basin/basin/conf/hosts.tpl

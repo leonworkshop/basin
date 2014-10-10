@@ -65,20 +65,20 @@ puppet_with_retry () {
 }
 
 basin_send_state () {
-    return 0
     # send system state to tarim
     if [ -f $BASIN_SENDSTATS ]; then
-        pushd $HOME_DIR/ci
+        pushd $HOME_DIR/basin
         if [ -f $HOME_DIR/run/host.yaml ]; then
             phase=`cat $HOME_DIR/run/host.yaml | grep "phase:" | awk '{print $2}'`
             print_msg "basin send system state of phase$phase to tarim"
-            $HOME_DIR/ci/tools/with_venv.sh python $BASIN_SENDSTATS --server tarim.internal.logstream.net --metric "server.state" --value $STATE_FILE --pid $HOME_DIR/run/stats.pid --prefix "phase$phase"
+            $HOME_DIR/basin/tools/with_venv.sh python $BASIN_SENDSTATS --server tarim.internal.shucaibao.com --metric "deploy.server.state" --value $STATE_FILE --pid $HOME_DIR/run/stats.pid
+            $HOME_DIR/basin/tools/with_venv.sh python $BASIN_SENDSTATS --server tarim.internal.shucaibao.com --metric "deploy.server.phase" --value $phase --pid $HOME_DIR/run/stats.pid
         else
-            $HOME_DIR/ci/tools/with_venv.sh python $BASIN_SENDSTATS --server tarim.internal.logstream.net --metric "server.state" --value $STATE_FILE --pid $HOME_DIR/run/stats.pid
+            $HOME_DIR/basin/tools/with_venv.sh python $BASIN_SENDSTATS --server tarim.internal.shucaibao.com --metric "deploy.server.state" --value $STATE_FILE --pid $HOME_DIR/run/stats.pid
         fi
         popd
-#  else
-#    python /root/basin_sendstate.py --server tarim.internal.logstream.net --metric "server.state" --value $STATE_FILE
+    else
+        python /root/basin_sendstate.py --server tarim.internal.shucaibao.com --metric "deploy.server.state" --value $STATE_FILE
     fi
 }
 

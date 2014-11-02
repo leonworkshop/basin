@@ -11,7 +11,7 @@ DATABASES = {
                 'ENGINE': 'django.db.backends.mysql',
                 'HOST': '<%= scope.lookupvar('meili::rds_host') %>',
                 'PORT': '<%= scope.lookupvar('meili::rds_port') %>',
-                'NAME': 'meili_db',
+                'NAME': 'shoowo_db',
                 'USER': 'meili',
                 'PASSWORD': 'rds_meil1',
                 'OPTIONS': {
@@ -36,13 +36,6 @@ MEILI_WEB_OPTIONS = {
     'pidfile': os.path.join(BASE_DIR, 'gunicorn.pid'),
 }
 
-########### Yulong ##############
-# Yulong options
-YULONG_PROVIDER_MANAGER = 'yulong.providers.manager.DigitalAssetProviderManager'
-YULONG_OPTIONS = {
-    'conf_file': os.path.join(BASE_DIR, '../conf/yulong.yaml'),
-}
-
 ########### Emei ##############
 EMEI_STORAGE_SERVICE = 'emei.storage_services.manager.StorageServiceManager'
 EMEI_OPTIONS = {
@@ -63,9 +56,11 @@ EMEI_OPTIONS = {
         'blob': {
             'enable': True,
             'instances': [
-                {'name': '<%= scope.lookupvar('meili::oss_instance_name') %>',
-                 'region': '<%= scope.lookupvar('meili::oss_instance_region') %>',
-                }
+                <% scope.lookupvar('meili::oss_instances').each do |val| -%>
+                    {'name': '<%= val['name'] %>',
+                     'region': '<%= val['name'] %>',
+                    },
+                <% end -%>
             ]
         },
         'message': {
@@ -82,4 +77,3 @@ EMEI_OPTIONS = {
 
 EMEI_NOSQL_INSTANCE_NAME = '<%= scope.lookupvar('meili::ots_instance_name') %>'
 EMEI_MESSAGE_QUEUE_NAME  = '<%= scope.lookupvar('meili::mqs_instance_name') %>'
-EMEI_BLOB_INSTANCE_NAME  = '<%= scope.lookupvar('meili::oss_instance_name') %>'

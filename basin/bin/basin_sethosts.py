@@ -22,16 +22,16 @@ from pylib.framework.lib import xmt
 
 def parseArguments():
 
-  parser = argparse.ArgumentParser(description="Shucaibao set hosts tool")
+  parser = argparse.ArgumentParser(description="shoowo set hosts tool")
   parser.add_argument('--verbose', action='store_true',
                       required=False,
                       help="Print out more debugging information")
   parser.add_argument('--console', action='store_true', required=False,
                       help="Print out log to console")
-  parser.add_argument('--logfile', default='/var/log/shucaibao/misc.log',
+  parser.add_argument('--logfile', default='/var/log/shoowo/misc.log',
                       help="logging file location")
   parser.add_argument('--pmt',
-                      default='/opt/shucaibao/skeleton/xmt/pmt.yaml',
+                      default='/opt/shoowo/skeleton/xmt/pmt.yaml',
                       help="Phase mapping table file path")
   parser.add_argument('--boot', action='store_true',
                       required=False,
@@ -40,9 +40,9 @@ def parseArguments():
                       help="ECS ID required in boot mode")
   parser.add_argument('--hosts', default='/etc/hosts',
                       help="hosts file to write to")
-  parser.add_argument('--host', default='/opt/shucaibao/run/host.yaml',
+  parser.add_argument('--host', default='/opt/shoowo/run/host.yaml',
                       help="host.yaml metadat file to write to")
-  parser.add_argument('--template', default='/opt/shucaibao/basin/conf/hosts.tpl',
+  parser.add_argument('--template', default='/opt/shoowo/basin/conf/hosts.tpl',
                       help="/etc/hosts template file")
 
   args = parser.parse_args()

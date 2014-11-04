@@ -6,7 +6,7 @@
 # Common functions for sichuan bash scripts
 #
 
-HOME_DIR=/opt/shucaibao
+HOME_DIR=/opt/shoowo
 BASIN_SENDSTATS=$HOME_DIR/basin/basin/bin/basin_sendstats.py
 STATE_FILE=$HOME_DIR/run/sichuan_state
 
@@ -67,14 +67,14 @@ basin_send_state () {
         if [ -f $HOME_DIR/run/host.yaml ]; then
             phase=`cat $HOME_DIR/run/host.yaml | grep "phase:" | awk '{print $2}'`
             print_msg "basin send system state of phase$phase to tarim"
-            $HOME_DIR/basin/tools/with_venv.sh python $BASIN_SENDSTATS --server tarim.internal.shucaibao.com --metric "deploy.server.state" --value $STATE_FILE --pid $HOME_DIR/run/stats.pid
-            $HOME_DIR/basin/tools/with_venv.sh python $BASIN_SENDSTATS --server tarim.internal.shucaibao.com --metric "deploy.server.phase" --value $phase --pid $HOME_DIR/run/stats.pid
+            $HOME_DIR/basin/tools/with_venv.sh python $BASIN_SENDSTATS --server tarim.internal.shoowo.com --metric "deploy.server.state" --value $STATE_FILE --pid $HOME_DIR/run/stats.pid
+            $HOME_DIR/basin/tools/with_venv.sh python $BASIN_SENDSTATS --server tarim.internal.shoowo.com --metric "deploy.server.phase" --value $phase --pid $HOME_DIR/run/stats.pid
         else
-            $HOME_DIR/basin/tools/with_venv.sh python $BASIN_SENDSTATS --server tarim.internal.shucaibao.com --metric "deploy.server.state" --value $STATE_FILE --pid $HOME_DIR/run/stats.pid
+            $HOME_DIR/basin/tools/with_venv.sh python $BASIN_SENDSTATS --server tarim.internal.shoowo.com --metric "deploy.server.state" --value $STATE_FILE --pid $HOME_DIR/run/stats.pid
         fi
         popd
     else
-        python /root/basin_sendstate.py --server tarim.internal.shucaibao.com --metric "deploy.server.state" --value $STATE_FILE
+        python /root/basin_sendstate.py --server tarim.internal.shoowo.com --metric "deploy.server.state" --value $STATE_FILE
     fi
 }
 

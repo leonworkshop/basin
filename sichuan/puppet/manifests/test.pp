@@ -59,13 +59,11 @@ class { '::meili':
   rds_host => 'rdsqbmi7za6bzv2.mysql.rds.aliyuncs.com',
   aliyun_access_id => 'rc7nop4ytXKsi0Kn',
   aliyun_access_key => 'm8UQmEhpnLni9z6G6yAIFNWdT8Sh21',
-  ots_instance_name =>'EMEIALIHZOTS0002',
-  ots_instance_region =>'cn-hangzhou',
-  oss_instances =>[ {'name' => 'alihzoss0001', 'region' => 'cn-hangzhou' },
-                    {'name' => 'alihzoss0002', 'region' => 'cn-hangzhou' } ],
+  ots_instances => [ {'name' => 'EMEIALIHZOTS0002', 'region' =>'cn-hangzhou' } ],
+  oss_instances =>[ {'name' => 'leon-oss-test', 'region' => 'cn-hangzhou' },
+                    {'name' => 'leon-oss-test', 'region' => 'cn-hangzhou' } ],
   mqs_instance_owner_id =>'e2x86rc97q',
-  mqs_instance_name =>'ALIHZMQS0002',
-  mqs_instance_region =>'cn-hangzhou',
+  mqs_instances => [ {'name' => 'ALIHZMQS0002', 'region' =>'cn-hangzhou' }],
 }
 
 

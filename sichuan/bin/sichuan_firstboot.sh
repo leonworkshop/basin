@@ -4,15 +4,15 @@
 # All rights reserved.
 #
 
-HOME_DIR=/opt/shucaibao
-JUNGAR_SERVER=jungar.internal.shucaibao.com
+HOME_DIR=/opt/shoowo
+JUNGAR_SERVER=jungar.internal.shoowo.com
 STATE_FILE=$HOME_DIR/run/sichuan_state
 
 . /root/sichuan_functions
 
 print_msg "============================================"
 print_msg ""
-print_msg "    Shucaibao Sichuan Server Machine Firstboot"
+print_msg "    shoowo Sichuan Server Machine Firstboot"
 print_msg ""
 print_msg "============================================"
 
@@ -77,21 +77,21 @@ export FACTER_oss_host=$OSS_HOST
 puppet_with_retry "/root/bootstrap.pp"
 print_msg "puppet bootstrap is done"
 
-print_msg "----------> Setup shucaibao git repository <----------"
-# setup the git (clone from shucaibao-cd server)
-cd $HOME_DIR/shucaibao
+print_msg "----------> Setup shoowo git repository <----------"
+# setup the git (clone from shoowo-cd server)
+cd $HOME_DIR/shoowo
 if [[ $DEBUG != "true" ]]; then
   git checkout master
 fi
 git pull
 git config --global core.editor "vim"
 git config --global user.email "shucaibao.ci@outlook.com"
-git config --global user.name "Shucaibao"
-print_msg "Setup the git repository: shucaibao/shucaibao"
+git config --global user.name "shoowo"
+print_msg "Setup the git repository: shoowo/shoowo"
 
 
 print_msg "----------> Setup basin git repository <----------"
-# setup the git (clone from shucaibao-cd server)
+# setup the git (clone from shoowo-cd server)
 cd $HOME_DIR/basin
 if [[ $DEBUG != "true" ]]; then
   git checkout master
@@ -99,11 +99,11 @@ fi
 git pull
 git config --global core.editor "vim"
 git config --global user.email "shucaibao.ci@outlook.com"
-git config --global user.name "Shucaibao Basin"
-print_msg "Setup the git repository: shucaibao/basin"
+git config --global user.name "shoowo Basin"
+print_msg "Setup the git repository: shoowo/basin"
 
 print_msg "----------> Setup skeleton git repository <----------"
-# setup the git (clone from shucaibao-cd server)
+# setup the git (clone from shoowo-cd server)
 cd $HOME_DIR/skeleton
 if [[ $DEBUG != "true" ]]; then
   git checkout master
@@ -111,13 +111,13 @@ fi
 git pull
 git config --global core.editor "vim"
 git config --global user.email "shucaibao.ci@outlook.com"
-git config --global user.name "shucaibao Basin"
-print_msg "Setup the git repository: shucaibao/skeleton"
+git config --global user.name "shoowo Basin"
+print_msg "Setup the git repository: shoowo/skeleton"
 
 print_msg "----------> Setup hostname <----------"
 cd $HOME_DIR/basin
 hostname=`cat /etc/hostname`
-tools/with_venv.sh python basin/bin/basin_sethosts.py --verbose --console --boot --ecs_name $hostname --template conf/hosts.tpl
+tools/with_venv.sh python basin/bin/basin_sethosts.py --verbose --console --boot --ecs_name $hostname --template basin/conf/hosts.tpl
 if [ $? -ne 0 ]; then
   system_bad "Failed to add host alias."
   exit 1
@@ -128,26 +128,26 @@ if [[ $DEBUG == "true" ]]; then
   qaidam_ip=${QAIDAM_IP}
   jungar_ip=${JUNGAR_IP}
   puppet apply --detailed-exitcodes -e "
-    host { 'tarim.internal.shucaibao.com':
+    host { 'tarim.internal.shoowo.com':
       ensure => absent,
     }
-    host { 'qaidam.internal.shucaibao.com':
+    host { 'qaidam.internal.shoowo.com':
       ensure => absent,
     }
-    host { 'jungar.internal.shucaibao.com':
+    host { 'jungar.internal.shoowo.com':
       ensure => absent,
     }
   "
   puppet apply --detailed-exitcodes -e "
-    host { 'tarim.internal.shucaibao.com':
+    host { 'tarim.internal.shoowo.com':
       ensure => present,
       ip => '$tarim_ip',
     }
-    host { 'qaidam.internal.shucaibao.com':
+    host { 'qaidam.internal.shoowo.com':
       ensure => present,
       ip => '$qaidam_ip',
     }
-    host { 'jungar.internal.shucaibao.com':
+    host { 'jungar.internal.shoowo.com':
       ensure => present,
       ip => '$jungar_ip',
     }

@@ -5,7 +5,7 @@
 # All rights reserved.
 #
 
-HOME_DIR=/opt/shucaibao
+HOME_DIR=/opt/shoowo
 STATE_FILE=$HOME_DIR/run/sichuan_state
 
 . $HOME_DIR/basin/sichuan/bin/sichuan_functions
@@ -13,7 +13,7 @@ STATE_FILE=$HOME_DIR/run/sichuan_state
 
 print_msg "============================================"
 print_msg ""
-print_msg " Shucaibao Sichuan Server Machine Secondboot"
+print_msg " shoowo Sichuan Server Machine Secondboot"
 print_msg ""
 print_msg "============================================"
 
@@ -66,7 +66,7 @@ fi
 if [ $? -eq 2 ]; then
   system_ready "Completed secondboot successfully."
 else
-  system_bad "failed in appling the Shucaibao build bits"
+  system_bad "failed in appling the shoowo build bits"
   exit 1
 fi
 

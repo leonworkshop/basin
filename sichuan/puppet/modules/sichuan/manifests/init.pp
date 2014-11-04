@@ -1,18 +1,18 @@
 # == Class sichuan
 # sichuan class presents the necessary configuration for
-# shucaibao sichuan servers
+# shoowo sichuan servers
 #
 
 class sichuan (
   $ip_address = inline_template("<%= @ipaddress %>"),
   $fqdn = inline_template("<%= @fqdn %>"),
   $admin = "root",
-  $home_dir = "/opt/shucaibao",
+  $home_dir = "/opt/shoowo",
   $service_ensure = 'present',
   $admin_pubkey = hiera('sichuan::admin_pubkey', ""),
   ) {
 
-  # Add shucaibao server admin public key to ssh authorized keys
+  # Add shoowo server admin public key to ssh authorized keys
   ssh_authorized_key { "admin_pubkey":
     ensure => $service_ensure,
     key => $admin_pubkey,
@@ -104,9 +104,9 @@ logger Merged new change \$1, do sichuan-apply
   }
 
   # Create logrotate rules
-  logrotate::rule { "shucaibao":
+  logrotate::rule { "shoowo":
     ensure => $service_ensure,
-    path    => "/var/log/shucaibao/*.log",
+    path    => "/var/log/shoowo/*.log",
     rotate  => 10,
     size    => '100k',
     compress => true,

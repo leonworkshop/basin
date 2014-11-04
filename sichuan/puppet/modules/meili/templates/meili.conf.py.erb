@@ -48,9 +48,11 @@ EMEI_OPTIONS = {
         'nosql': {
             'enable': True,
             'instances': [
-                {'name': '<%= scope.lookupvar('meili::ots_instance_name') %>',
-                 'region': '<%= scope.lookupvar('meili::ots_instance_region') %>',
-                }
+                <% scope.lookupvar('meili::ots_instances').each do |val| -%>
+                    {'name': '<%= val['name'] %>',
+                     'region': '<%= val['region'] %>',
+                    },
+                <% end -%>
             ]
         },
         'blob': {
@@ -58,7 +60,7 @@ EMEI_OPTIONS = {
             'instances': [
                 <% scope.lookupvar('meili::oss_instances').each do |val| -%>
                     {'name': '<%= val['name'] %>',
-                     'region': '<%= val['name'] %>',
+                     'region': '<%= val['region'] %>',
                     },
                 <% end -%>
             ]
@@ -67,13 +69,16 @@ EMEI_OPTIONS = {
             'enable': True,
             'owner_id': '<%= scope.lookupvar('meili::mqs_instance_owner_id') %>',
             'instances': [
-                {'name': '<%= scope.lookupvar('meili::mqs_instance_name') %>',
-                 'region': '<%= scope.lookupvar('meili::mqs_instance_region') %>',
-                }
+                <% scope.lookupvar('meili::mqs_instances').each do |val| -%>
+                    {'name': '<%= val['name'] %>',
+                     'region': '<%= val['region'] %>',
+                    },
+                <% end -%>
             ]
         }
     }
 }
 
-EMEI_NOSQL_INSTANCE_NAME = '<%= scope.lookupvar('meili::ots_instance_name') %>'
-EMEI_MESSAGE_QUEUE_NAME  = '<%= scope.lookupvar('meili::mqs_instance_name') %>'
+EMEI_NOSQL_INSTANCE_NAME = '<%= scope.lookupvar('meili::nosql_user') %>'
+EMEI_BLOB_INSTANCE_USER =  '<%= scope.lookupvar('meili::blob_user') %>'
+EMEI_BLOB_INSTANCE_PUBLIC =  '<%= scope.lookupvar('meili::blob_public') %>'

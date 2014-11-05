@@ -19,7 +19,7 @@ class shennv (
   $blob_public                = 'alihzoss0002',
   $nosql_user                 = 'EMEIALIHZOTS0001',
 
-  $statsd_host                = 'tarim.internal.shoowo.com'
+  $statsd_host                = 'tarim.internal.shoowo.com',
 
   $package_name               = $shennv::params::package_name,
   $package_ensure             = $shennv::params::package_ensure,

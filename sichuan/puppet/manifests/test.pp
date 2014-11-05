@@ -64,6 +64,24 @@ class { '::meili':
                     {'name' => 'leon-oss-test', 'region' => 'cn-hangzhou' } ],
   mqs_instance_owner_id =>'e2x86rc97q',
   mqs_instances => [ {'name' => 'ALIHZMQS0002', 'region' =>'cn-hangzhou' }],
+  blob_user => 'leon-oss-test',
+  blob_public => 'leon-oss-test',
 }
 
+
+class { '::shennv':
+    service_ensure => 'present',
+    service_enable => true,
+    mode => 'all',
+    redis_host => '127.0.0.1',
+    redis_port => 6379,
+    rds_host => 'rdsqbmi7za6bzv2.mysql.rds.aliyuncs.com',
+    aliyun_access_id => 'rc7nop4ytXKsi0Kn',
+    aliyun_access_key => 'm8UQmEhpnLni9z6G6yAIFNWdT8Sh21',
+    ots_instances => [ {'name' => 'EMEIALIHZOTS0002', 'region' =>'cn-hangzhou' } ],
+    oss_instances =>[ {'name' => 'leon-oss-test', 'region' => 'cn-hangzhou' },
+                    {'name' => 'leon-oss-test', 'region' => 'cn-hangzhou' } ],
+    mqs_instance_owner_id =>'e2x86rc97q',
+    mqs_instances => [ {'name' => 'ALIHZMQS0002', 'region' =>'cn-hangzhou' }],
+}
 

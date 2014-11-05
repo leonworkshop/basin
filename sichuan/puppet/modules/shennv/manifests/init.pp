@@ -9,13 +9,17 @@ class shennv (
   $rds_port                   = 3306,
   $aliyun_access_id           = 'must fill a value',
   $aliyun_access_key          = 'must fill a value',
-  $ots_instance_name          = 'EMEIALIHZOTS0001',
-  $ots_instance_region        = 'cn-hangzhou',
-  $oss_instance_name          = 'alihzoss0001',
-  $oss_instance_region        = 'cn-hangzhou',
+  $ots_instances = [ {'name' => 'EMEIALIHZOTS0001', 'region' => 'cn-hangzhou' } ],
+  $oss_instances = [ {'name' => 'alihzoss0001', 'region' => 'cn-hangzhou' },
+                     {'name' => 'alihzoss0002', 'region' => 'cn-hangzhou' }],
+  $mqs_instances = [ {'name' => 'ALIHZMQS0001', 'region' => 'cn-hangzhou' }],
   $mqs_instance_owner_id      = 'e2x86rc97q',
-  $mqs_instance_name          = 'ALIHZMQS0001',
-  $mqs_instance_region        = 'cn-hangzhou',
+
+  $blob_user                  = 'alihzoss0001',
+  $blob_public                = 'alihzoss0002',
+  $nosql_user                 = 'EMEIALIHZOTS0001',
+
+  $statsd_host                = 'tarim.internal.shoowo.com'
 
   $package_name               = $shennv::params::package_name,
   $package_ensure             = $shennv::params::package_ensure,

@@ -21,6 +21,15 @@ DATABASES = {
 
 SECRET_KEY = 'CGU8pVbQAe7t/jnxIPg9o6pHlRC8yEg40kIOxARxCz0/ujVJB4P9og=='
 
+############### Tarim ##################
+# statsd integration
+STATSD_CLIENT = 'django_statsd.clients.normal'
+STATSD_CELERY_SIGNALS = True
+STATSD_MODEL_SIGNALS = True
+STATSD_HOST = '<%= scope.lookupvar('shennv::statsd_host') %>'
+STATSD_PORT = 8125
+STATSD_PREFIX = socket.gethostname()
+
 ############### WebServer ##################
 # If you're using a reverse proxy, you should enable the X-Forwarded-Proto
 # and X-Forwarded-Host headers, and uncomment the following settings
@@ -60,12 +69,12 @@ EMEI_OPTIONS = {
         'provider': 'aliyun',
         'provider_url': 'aliyuncs.com',
         'provider_protocol': 'http',
-        'access_key_id': '<%= scope.lookupvar('meili::aliyun_access_id') %>',
-        'access_key_secret': '<%= scope.lookupvar('meili::aliyun_access_key') %>',
+        'access_key_id': '<%= scope.lookupvar('shennv::aliyun_access_id') %>',
+        'access_key_secret': '<%= scope.lookupvar('shennv::aliyun_access_key') %>',
         'nosql': {
             'enable': True,
             'instances': [
-                <% scope.lookupvar('meili::ots_instances').each do |val| -%>
+                <% scope.lookupvar('shennv::ots_instances').each do |val| -%>
                     {'name': '<%= val['name'] %>',
                      'region': '<%= val['region'] %>',
                     },
@@ -75,7 +84,7 @@ EMEI_OPTIONS = {
         'blob': {
             'enable': True,
             'instances': [
-                <% scope.lookupvar('meili::oss_instances').each do |val| -%>
+                <% scope.lookupvar('shennv::oss_instances').each do |val| -%>
                     {'name': '<%= val['name'] %>',
                      'region': '<%= val['region'] %>',
                     },
@@ -84,9 +93,9 @@ EMEI_OPTIONS = {
         },
         'message': {
             'enable': True,
-            'owner_id': '<%= scope.lookupvar('meili::mqs_instance_owner_id') %>',
+            'owner_id': '<%= scope.lookupvar('shennv::mqs_instance_owner_id') %>',
             'instances': [
-                <% scope.lookupvar('meili::mqs_instances').each do |val| -%>
+                <% scope.lookupvar('shennv::mqs_instances').each do |val| -%>
                     {'name': '<%= val['name'] %>',
                      'region': '<%= val['region'] %>',
                     },
@@ -96,6 +105,6 @@ EMEI_OPTIONS = {
     }
 }
 
-EMEI_NOSQL_INSTANCE_NAME = '<%= scope.lookupvar('meili::nosql_user') %>'
-EMEI_BLOB_INSTANCE_USER =  '<%= scope.lookupvar('meili::blob_user') %>'
-EMEI_BLOB_INSTANCE_PUBLIC =  '<%= scope.lookupvar('meili::blob_public') %>'
+EMEI_NOSQL_INSTANCE_NAME = '<%= scope.lookupvar('shennv::nosql_user') %>'
+EMEI_BLOB_INSTANCE_USER =  '<%= scope.lookupvar('shennv::blob_user') %>'
+EMEI_BLOB_INSTANCE_PUBLIC =  '<%= scope.lookupvar('shennv::blob_public') %>'

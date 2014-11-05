@@ -15,6 +15,7 @@ class meili (
   $blob_user                  = 'alihzoss0001',
   $blob_public                = 'alihzoss0002',
   $nosql_user                 = 'EMEIALIHZOTS0001',
+  $statsd_host                = 'tarim.internal.shoowo.com',
 
   $package_name               = $meili::params::package_name,
   $package_ensure             = $meili::params::package_ensure,

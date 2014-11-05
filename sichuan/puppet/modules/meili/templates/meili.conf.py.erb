@@ -22,6 +22,15 @@ DATABASES = {
 
 SECRET_KEY = 'CGU8pVbQAe7t/jnxIPg9o6pHlRC8yEg40kIOxARxCz0/ujVJB4P9og=='
 
+############### Tarim ##################
+# statsd integration
+STATSD_CLIENT = 'django_statsd.clients.normal'
+STATSD_CELERY_SIGNALS = True
+STATSD_MODEL_SIGNALS = True
+STATSD_HOST = '<%= scope.lookupvar('meili::statsd_host') %>'
+STATSD_PORT = 8125
+STATSD_PREFIX = socket.gethostname()
+
 ############### WebServer ##################
 # If you're using a reverse proxy, you should enable the X-Forwarded-Proto
 # and X-Forwarded-Host headers, and uncomment the following settings

@@ -66,8 +66,11 @@ class { '::meili':
   mqs_instances => [ {'name' => 'ALIHZMQS0002', 'region' =>'cn-hangzhou' }],
   blob_user => 'leon-oss-test',
   blob_public => 'leon-oss-test',
+<<<<<<< HEAD
   blob_user_domain => 'leon-oss-test.oss-cn-hangzhou.aliyuncs.com',
   blob_public_domain => 'leon-oss-test.oss-cn-hangzhou.aliyuncs.com',
+=======
+>>>>>>> 83e54cdec3db2937eff1c64a6235338f72ad4d41
 }
 
 
@@ -85,9 +88,12 @@ class { '::shennv':
                     {'name' => 'leon-oss-test', 'region' => 'cn-hangzhou' } ],
     mqs_instance_owner_id =>'e2x86rc97q',
     mqs_instances => [ {'name' => 'ALIHZMQS0002', 'region' =>'cn-hangzhou' }],
+<<<<<<< HEAD
     blob_user => 'leon-oss-test',
     blob_public => 'leon-oss-test',
     blob_user_domain => 'leon-oss-test.oss-cn-hangzhou.aliyuncs.com',
     blob_public_domain => 'leon-oss-test.oss-cn-hangzhou.aliyuncs.com',
+=======
+>>>>>>> 83e54cdec3db2937eff1c64a6235338f72ad4d41
 }
 

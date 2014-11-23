@@ -39,6 +39,7 @@ fi
 apt-get update
 apt-get install git openjdk-7-jdk curl htop monit vim-nox supervisor python-pip python-dev build-essential --yes
 apt-get install libmysqlclient-dev libffi-dev --yes
+apt-get install libxml2-dev libxslt1-dev --yes
 apt-get install --upgrade pip --yes
 print_msg "apt-get installation done"
 

@@ -45,6 +45,19 @@ MEILI_WEB_OPTIONS = {
     'pidfile': os.path.join(BASE_DIR, 'gunicorn.pid'),
 }
 
+########### Cache system #############
+CACHES = {
+    'default': {
+        'BACKEND': 'django_bmemcached.memcached.BMemcached',
+        'LOCATION': [<% scope.lookupvar('meili::cache_hosts').each do |hostport| -%>
+                        '<%= hostport %>',
+                     <% end -%>],
+        'OPTIONS': { <% scope.lookupvar('meili::cache_options').each_pair do |key, val| %>
+                       '<%= key %>': '<%= val %>',
+                     <% end %> },
+    }
+}
+
 ########### Emei ##############
 EMEI_STORAGE_SERVICE = 'emei.storage_services.manager.StorageServiceManager'
 EMEI_OPTIONS = {

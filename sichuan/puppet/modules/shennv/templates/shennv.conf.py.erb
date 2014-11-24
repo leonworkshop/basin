@@ -62,6 +62,19 @@ CELERY_ALWAYS_EAGER = False
 BROKER_URL = 'redis://<%= scope.lookupvar('shennv::redis_host') %>:<%= scope.lookupvar('shennv::redis_port') %>'
 CELERY_RESULT_BACKEND = 'redis://<%= scope.lookupvar('shennv::redis_host') %>:<%= scope.lookupvar('shennv::redis_port') %>'
 
+########### Cache system #############
+CACHES = {
+    'default': {
+        'BACKEND': 'django_bmemcached.memcached.BMemcached',
+        'LOCATION': [<% scope.lookupvar('shennv::cache_hosts').each do |hostport| -%>
+                        '<%= hostport %>',
+                     <% end -%>],
+        'OPTIONS': { <% scope.lookupvar('shennv::cache_options').each_pair do |key, val| %>
+                       '<%= key %>': '<%= val %>',
+                     <% end %> },
+    }
+}
+
 ########### Emei ##############
 EMEI_STORAGE_SERVICE = 'emei.storage_services.manager.StorageServiceManager'
 EMEI_OPTIONS = {

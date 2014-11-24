@@ -18,11 +18,8 @@ class shennv (
   $blob_user                  = 'alihzoss0001',
   $blob_public                = 'alihzoss0002',
   $nosql_user                 = 'EMEIALIHZOTS0001',
-<<<<<<< HEAD
   $blob_user_domain           = 'user.shoowo.com',
   $blob_public_domain         = 'public.shoowo.com',
-=======
->>>>>>> 83e54cdec3db2937eff1c64a6235338f72ad4d41
 
   $statsd_host                = 'tarim.internal.shoowo.com',
 

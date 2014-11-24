@@ -52,6 +52,13 @@ class { 'redis':
     redis_group => 'redis',
 }
 
+class { 'memcached':
+    max_memory => 512,
+    listen_ip => '127.0.0.1',
+    tcp_port => 11211,
+    udp_port => 11211,
+}
+
 class { '::meili':
   service_ensure => 'present',
   service_enable => true,
@@ -68,6 +75,8 @@ class { '::meili':
   blob_public => 'leon-oss-test',
   blob_user_domain => 'leon-oss-test.oss-cn-hangzhou.aliyuncs.com',
   blob_public_domain => 'leon-oss-test.oss-cn-hangzhou.aliyuncs.com',
+  cache_hosts => [ '127.0.0.1:11211' ],
+  cache_options => { 'MAX_ENTRIES' => 300 },
 }
 
 

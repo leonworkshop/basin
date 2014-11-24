@@ -19,6 +19,10 @@ class meili (
   $blob_user_domain           = 'user.shoowo.com',
   $blob_public_domain         = 'public.shoowo.com',
 
+  # cache settings
+  $cache_hosts                = [ '127.0.0.1:11211' ],
+  $cache_options              = undef,
+
   $package_name               = $meili::params::package_name,
   $package_ensure             = $meili::params::package_ensure,
   $package_url                = undef,

@@ -45,6 +45,24 @@ MEILI_WEB_OPTIONS = {
     'pidfile': os.path.join(BASE_DIR, 'gunicorn.pid'),
 }
 
+############# Redis #############
+
+# Generic Redis configuration used as defaults for various things including:
+# Buffers, Quotas, TSDB
+
+MEILI_REDIS_OPTIONS = {
+    'hosts': {
+        0: {
+            'host': '<%= scope.lookupvar('meili::redis_host') %>',
+            'port': <%= scope.lookupvar('meili::redis_port') %>,
+        }
+    }
+}
+
+CELERY_ALWAYS_EAGER = False
+BROKER_URL = 'redis://<%= scope.lookupvar('meili::redis_host') %>:<%= scope.lookupvar('meili::redis_port') %>'
+CELERY_RESULT_BACKEND = 'redis://<%= scope.lookupvar('meili::redis_host') %>:<%= scope.lookupvar('meili::redis_port') %>'
+
 ########### Cache system #############
 CACHES = {
     'default': {

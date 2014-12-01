@@ -9,7 +9,7 @@ class meili (
   $rds_port                   = 3306,
   $aliyun_access_id           = 'must fill a value',
   $aliyun_access_key          = 'must fill a value',
-  $ots_instances = [ {'name' => 'EMEIALIHZOTS0001', 'region' => 'cn-hangzhou' } ],
+  $ots_instances = [],
   $oss_instances = [ {'name' => 'alihzoss0001', 'region' => 'cn-hangzhou' },
                      {'name' => 'alihzoss0002', 'region' => 'cn-hangzhou' }],
   $mqs_instances = [ {'name' => 'ALIHZMQS0001', 'region' => 'cn-hangzhou' }],

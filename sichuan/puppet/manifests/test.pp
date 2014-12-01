@@ -52,6 +52,16 @@ class { 'redis':
     redis_group => 'redis',
 }
 
+class { 'redis_graphite':
+    service_ensure => 'present',
+    service_enable => true,
+    redis_host  => '127.0.0.1',
+    redis_port  => 6379,
+    carbon_host => '115.29.197.162',
+    carbon_port => 2003,
+    interval => 10,
+}
+
 class { 'memcached':
     max_memory => 512,
     listen_ip => '127.0.0.1',

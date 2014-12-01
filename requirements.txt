@@ -1,0 +1,5 @@
+# Required
+redis==2.8.0
+
+# Optional
+#hiredis==0.1.1

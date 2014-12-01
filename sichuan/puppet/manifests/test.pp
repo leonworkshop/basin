@@ -98,5 +98,6 @@ class { '::shennv':
     blob_public => 'leon-oss-test',
     blob_user_domain => 'leon-oss-test.oss-cn-hangzhou.aliyuncs.com',
     blob_public_domain => 'leon-oss-test.oss-cn-hangzhou.aliyuncs.com',
+    cache_options => { 'MAX_ENTRIES' => 1000 },
 }
 

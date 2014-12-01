@@ -2,6 +2,9 @@
 #
 class meili (
   $version                    = false,
+
+  $redis_host                 = '127.0.0.1',
+  $redis_port                 = 6379,
   $rds_host                   = 'rdsejmeynzn3yvu.mysql.rds.aliyuncs.com',
   $rds_port                   = 3306,
   $aliyun_access_id           = 'must fill a value',

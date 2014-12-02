@@ -22,17 +22,17 @@ Global options
 
 
 def parseArguments():
-    parser = argparse.ArgumentParser(description="Shucaibao Sichuan post boot tool")
+    parser = argparse.ArgumentParser(description="shoowo Sichuan post boot tool")
     parser.add_argument('--verbose', action='store_true',
                         required=False,
                         help="Print out more debugging information")
     parser.add_argument('--console',
                         required=False, action='store_true',
                         help="Print out log to console")
-    parser.add_argument('--logfile', default='/var/log/shucaibao/sichuan_deploy.log',
+    parser.add_argument('--logfile', default='/var/log/shoowo/sichuan_deploy.log',
                         help="Logging file")
     parser.add_argument('--pmt',
-                        default='/opt/shucaibao/skeleton/xmt/pmt.yaml',
+                        default='/opt/shoowo/skeleton/xmt/pmt.yaml',
                         help="Phase mapping table file path")
     args = parser.parse_args()
     return args

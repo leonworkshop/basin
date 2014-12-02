@@ -4,8 +4,8 @@
 # All rights reserved
 #
 
-HOME_DIR=/opt/shucaibao
-LOG_DIR=/var/log/shucaibao
+HOME_DIR=/opt/shoowo
+LOG_DIR=/var/log/shoowo
 STATE_FILE=$HOME_DIR/run/sichuan_state
 FIRST_BOOT=sichuan_firstboot.sh
 
@@ -13,7 +13,7 @@ FIRST_BOOT=sichuan_firstboot.sh
 
 print_msg "============================================"
 print_msg ""
-print_msg "    Shucaibao Sichuan Bootstrap"
+print_msg "    shoowo Sichuan Bootstrap"
 print_msg " "
 print_msg "============================================"
 
@@ -39,6 +39,7 @@ fi
 apt-get update
 apt-get install git openjdk-7-jdk curl htop monit vim-nox supervisor python-pip python-dev build-essential --yes
 apt-get install libmysqlclient-dev libffi-dev --yes
+apt-get install libxml2-dev libxslt1-dev --yes
 apt-get install --upgrade pip --yes
 print_msg "apt-get installation done"
 
@@ -85,22 +86,22 @@ if [[ $DEBUG != "true" ]]; then
     log_out="--logdest syslog"
 fi
 puppet apply --detailed-exitcodes $log_out -e "
-  host { 'tarim.internal.shucaibao.com':
+  host { 'tarim.internal.shoowo.com':
     ensure => present,
     ip => '$tarim_ip',
   }
-  host { 'qaidam.internal.shucaibao.com':
+  host { 'qaidam.internal.shoowo.com':
     ensure => present,
     ip => '$qaidam_ip',
   }
-  host { 'jungar.internal.shucaibao.com':
+  host { 'jungar.internal.shoowo.com':
     ensure => present,
     ip => '$jungar_ip',
   }
 "
 
 RETVAR=$?
-echo "return vallue: $RETVAR"
+echo "return value: $RETVAR"
 if [[ $RETVAR != 0 && $RETVAR != 2 ]]; then
   system_bad "Failed to add host alias. error code: $RETVAR"
   exit 1

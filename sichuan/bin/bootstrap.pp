@@ -3,8 +3,8 @@
 #
 include git
 
-$jungar_ip_address = "jungar.internal.shucaibao.com"
-$home_dir = '/opt/shucaibao'
+$jungar_ip_address = "jungar.internal.shoowo.com"
+$home_dir = '/opt/shoowo'
 
 if $operatingsystem == 'Ubuntu' and $operatingsystemrelease == '14.04' {
   notice("Check data disk for Ubuntu 14.04")
@@ -41,21 +41,21 @@ file { '/alidata1':
   require => Exec['Partition and format /dev/xvdb'],
 }
 
-git::repo { 'shucaibaogit':
-    target => "$home_dir/shucaibao",
-    source => "logstream@$jungar_ip_address:/opt/shucaibao/shucaibao",
+git::repo { 'shoowogit':
+    target => "$home_dir/shoowo",
+    source => "logstream@$jungar_ip_address:/opt/shoowo/shoowo",
     user => "root",
 }
 
 git::repo { 'basingit':
   target => "$home_dir/basin",
-  source => "logstream@$jungar_ip_address:/opt/shucaibao/basin",
+  source => "logstream@$jungar_ip_address:/opt/shoowo/basin",
   user => "root",
 }
 
 git::repo { 'skeletongit':
   target => "$home_dir/skeleton",
-  source => "logstream@$jungar_ip_address:/opt/shucaibao/skeleton",
+  source => "logstream@$jungar_ip_address:/opt/shoowo/skeleton",
   user => "root",
 }
 

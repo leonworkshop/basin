@@ -11,7 +11,7 @@ DATABASES = {
                 'ENGINE': 'django.db.backends.mysql',
                 'HOST': '<%= scope.lookupvar('meili::rds_host') %>',
                 'PORT': '<%= scope.lookupvar('meili::rds_port') %>',
-                'NAME': 'meili_db',
+                'NAME': 'shoowo_db',
                 'USER': 'meili',
                 'PASSWORD': 'rds_meil1',
                 'OPTIONS': {
@@ -21,6 +21,15 @@ DATABASES = {
 }
 
 SECRET_KEY = 'CGU8pVbQAe7t/jnxIPg9o6pHlRC8yEg40kIOxARxCz0/ujVJB4P9og=='
+
+############### Tarim ##################
+# statsd integration
+STATSD_CLIENT = 'django_statsd.clients.normal'
+STATSD_CELERY_SIGNALS = True
+STATSD_MODEL_SIGNALS = True
+STATSD_HOST = '<%= scope.lookupvar('meili::statsd_host') %>'
+STATSD_PORT = 8125
+STATSD_PREFIX = socket.gethostname()
 
 ############### WebServer ##################
 # If you're using a reverse proxy, you should enable the X-Forwarded-Proto
@@ -36,11 +45,35 @@ MEILI_WEB_OPTIONS = {
     'pidfile': os.path.join(BASE_DIR, 'gunicorn.pid'),
 }
 
-########### Yulong ##############
-# Yulong options
-YULONG_PROVIDER_MANAGER = 'yulong.providers.manager.DigitalAssetProviderManager'
-YULONG_OPTIONS = {
-    'conf_file': os.path.join(BASE_DIR, '../conf/yulong.yaml'),
+############# Redis #############
+
+# Generic Redis configuration used as defaults for various things including:
+# Buffers, Quotas, TSDB
+
+MEILI_REDIS_OPTIONS = {
+    'hosts': {
+        0: {
+            'host': '<%= scope.lookupvar('meili::redis_host') %>',
+            'port': <%= scope.lookupvar('meili::redis_port') %>,
+        }
+    }
+}
+
+CELERY_ALWAYS_EAGER = False
+BROKER_URL = 'redis://<%= scope.lookupvar('meili::redis_host') %>:<%= scope.lookupvar('meili::redis_port') %>'
+CELERY_RESULT_BACKEND = 'redis://<%= scope.lookupvar('meili::redis_host') %>:<%= scope.lookupvar('meili::redis_port') %>'
+
+########### Cache system #############
+CACHES = {
+    'default': {
+        'BACKEND': 'django_bmemcached.memcached.BMemcached',
+        'LOCATION': [<% scope.lookupvar('meili::cache_hosts').each do |hostport| -%>
+                        '<%= hostport %>',
+                     <% end -%>],
+        'OPTIONS': { <% scope.lookupvar('meili::cache_options').each_pair do |key, val| %>
+                       '<%= key %>': '<%= val %>',
+                     <% end %> },
+    }
 }
 
 ########### Emei ##############
@@ -55,31 +88,39 @@ EMEI_OPTIONS = {
         'nosql': {
             'enable': True,
             'instances': [
-                {'name': '<%= scope.lookupvar('meili::ots_instance_name') %>',
-                 'region': '<%= scope.lookupvar('meili::ots_instance_region') %>',
-                }
+                <% scope.lookupvar('meili::ots_instances').each do |val| -%>
+                    {'name': '<%= val['name'] %>',
+                     'region': '<%= val['region'] %>',
+                    },
+                <% end -%>
             ]
         },
         'blob': {
             'enable': True,
             'instances': [
-                {'name': '<%= scope.lookupvar('meili::oss_instance_name') %>',
-                 'region': '<%= scope.lookupvar('meili::oss_instance_region') %>',
-                }
+                <% scope.lookupvar('meili::oss_instances').each do |val| -%>
+                    {'name': '<%= val['name'] %>',
+                     'region': '<%= val['region'] %>',
+                    },
+                <% end -%>
             ]
         },
         'message': {
             'enable': True,
             'owner_id': '<%= scope.lookupvar('meili::mqs_instance_owner_id') %>',
             'instances': [
-                {'name': '<%= scope.lookupvar('meili::mqs_instance_name') %>',
-                 'region': '<%= scope.lookupvar('meili::mqs_instance_region') %>',
-                }
+                <% scope.lookupvar('meili::mqs_instances').each do |val| -%>
+                    {'name': '<%= val['name'] %>',
+                     'region': '<%= val['region'] %>',
+                    },
+                <% end -%>
             ]
         }
     }
 }
 
-EMEI_NOSQL_INSTANCE_NAME = '<%= scope.lookupvar('meili::ots_instance_name') %>'
-EMEI_MESSAGE_QUEUE_NAME  = '<%= scope.lookupvar('meili::mqs_instance_name') %>'
-EMEI_BLOB_INSTANCE_NAME  = '<%= scope.lookupvar('meili::oss_instance_name') %>'
+EMEI_NOSQL_INSTANCE_NAME = '<%= scope.lookupvar('meili::nosql_user') %>'
+EMEI_BLOB_INSTANCE_USER =  '<%= scope.lookupvar('meili::blob_user') %>'
+EMEI_BLOB_INSTANCE_PUBLIC =  '<%= scope.lookupvar('meili::blob_public') %>'
+EMEI_BLOB_USER_DOMAIN = '<%= scope.lookupvar('meili::blob_user_domain') %>'
+EMEI_BLOB_PUBLIC_DOMAIN = '<%= scope.lookupvar('meili::blob_public_domain') %>'

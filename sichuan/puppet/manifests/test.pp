@@ -76,7 +76,7 @@ class { '::meili':
   rds_host => 'rdsqbmi7za6bzv2.mysql.rds.aliyuncs.com',
   aliyun_access_id => 'rc7nop4ytXKsi0Kn',
   aliyun_access_key => 'm8UQmEhpnLni9z6G6yAIFNWdT8Sh21',
-  ots_instances => [ {'name' => 'EMEIALIHZOTS0002', 'region' =>'cn-hangzhou' } ],
+  ots_instances => [],
   oss_instances =>[ {'name' => 'leon-oss-test', 'region' => 'cn-hangzhou' },
                     {'name' => 'leon-oss-test', 'region' => 'cn-hangzhou' } ],
   mqs_instance_owner_id =>'e2x86rc97q',
@@ -87,6 +87,7 @@ class { '::meili':
   blob_public_domain => 'leon-oss-test.oss-cn-hangzhou.aliyuncs.com',
   cache_hosts => [ '127.0.0.1:11211' ],
   cache_options => { 'MAX_ENTRIES' => 300 },
+  log_level => 'DEBUG',
 }
 
 
@@ -99,7 +100,6 @@ class { '::shennv':
     rds_host => 'rdsqbmi7za6bzv2.mysql.rds.aliyuncs.com',
     aliyun_access_id => 'rc7nop4ytXKsi0Kn',
     aliyun_access_key => 'm8UQmEhpnLni9z6G6yAIFNWdT8Sh21',
-    ots_instances => [ {'name' => 'EMEIALIHZOTS0002', 'region' =>'cn-hangzhou' } ],
     oss_instances =>[ {'name' => 'leon-oss-test', 'region' => 'cn-hangzhou' },
                     {'name' => 'leon-oss-test', 'region' => 'cn-hangzhou' } ],
     mqs_instance_owner_id =>'e2x86rc97q',

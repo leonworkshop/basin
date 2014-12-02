@@ -2,6 +2,7 @@
 #
 class shennv (
   $version                    = false,
+  $log_level                  = 'INFO',
 
   $redis_host                 = '127.0.0.1',
   $redis_port                 = 6379,

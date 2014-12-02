@@ -5,6 +5,7 @@
 # The entry for setting up the tarim.
 #
 
+HOME_DIR=/opt/shucaibao
 . $HOME_DIR/basin/basin/bin/basin_functions
 
 export FACTER_tarim_root_dir=$(dirname $(readlink -m $BASH_SOURCE))/..

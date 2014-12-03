@@ -30,7 +30,10 @@ run_with_retry () {
   do
     eval $1
     [ $? -eq 0 ] && return 0
-    print_msg "Fail in command [$1]....Retry $n/5"
+    print_msg "Fail in command [$1]....try [$2]"
+    eval $2
+    [ $? -eq 0 ] && return 0
+    print_msg "Fail in command [$2]....Retry $n/5"
     n=$[$n+1]
     sleep 5
   done

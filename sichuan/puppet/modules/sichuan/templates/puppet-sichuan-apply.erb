@@ -13,9 +13,9 @@ cd $HOME_DIR/basin
 config_inprogress "In progress of sichuan-apply execution"
 
 if [[ $DEBUG != "true" ]]; then
-    tools/with_venv.sh python sichuan/bin/sichuan_deploy.py --pmt $HOME_DIR/skeleton/xmt/pmt.yaml
+    tools/with_venv.sh python sichuan/bin/sichuan_deploy.py --pmt $HOME_DIR/skeleton/xmt/pmt.yaml --pbt $HOME_DIR/skeleton/xmt/phase_build.yaml
 else
-    tools/with_venv.sh python sichuan/bin/sichuan_deploy.py --pmt $HOME_DIR/skeleton/xmt/pmt.yaml  --console --verbose
+    tools/with_venv.sh python sichuan/bin/sichuan_deploy.py --pmt $HOME_DIR/skeleton/xmt/pmt.yaml --pbt $HOME_DIR/skeleton/xmt/phase_build.yaml  --console --verbose
 fi
 
 if [[ $? -ne 0 ]]; then

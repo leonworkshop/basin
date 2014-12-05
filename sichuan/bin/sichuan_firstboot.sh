@@ -52,22 +52,38 @@ EOL
 
 print_msg "---------> Puppet bootstrap <-----------"
 
-run_with_retry "puppet module install puppetlabs-stdlib"
-run_with_retry "puppet module install steveydevey-htop"
-run_with_retry "puppet module install steveydevey-vim"
-run_with_retry "puppet module install puppetlabs-java"
-run_with_retry "puppet module install ispavailability-file_concat"
-run_with_retry "puppet module install jbussdieker-monit"
-run_with_retry "puppet module install puppetlabs-ntp --version 3.0.3"
-run_with_retry "puppet module install puppetlabs-rsync"
-run_with_retry "puppet module install theforeman-git"
-run_with_retry "puppet module install rodjek-logrotate"
-run_with_retry "puppet module install saz-rsyslog"
-run_with_retry "puppet module install puppetlabs-concat"
-run_with_retry "puppet module install puppetlabs-apt"
-run_with_retry "puppet module install maestrodev-wget"
-run_with_retry "puppet module install puppetlabs-gcc"
-run_with_retry "puppet module install stankevich-python"
+run_with_retry "puppet module install puppetlabs-stdlib" "puppet module upgrade
+puppetlabs-stdlib"
+run_with_retry "puppet module install steveydevey-htop" "puppet module upgrade
+steveydevey-htop"
+run_with_retry "puppet module install steveydevey-vim" "puppet module upgrade
+steveydevey-vim"
+run_with_retry "puppet module install puppetlabs-java" "puppet module upgrade
+puppetlabs-java"
+run_with_retry "puppet module install ispavailability-file_concat" "puppet module upgrade
+ispavailability-file_concat"
+run_with_retry "puppet module install jbussdieker-monit" "puppet module upgrade
+jbussdieker-monit"
+run_with_retry "puppet module install puppetlabs-ntp --version 3.0.3" "puppet module
+upgrade puppetlabs-ntp --version 3.0.3"
+run_with_retry "puppet module install puppetlabs-rsync" "puppet module upgrade
+puppetlabs-rsync"
+run_with_retry "puppet module install theforeman-git" "puppet module upgrade
+theforeman-git"
+run_with_retry "puppet module install rodjek-logrotate" "puppet module upgrade
+rodjek-logrotate"
+run_with_retry "puppet module install saz-rsyslog" "puppet module upgrade saz-rsyslog"
+run_with_retry "puppet module install puppetlabs-concat" "puppet module upgrade
+puppetlabs-concat"
+run_with_retry "puppet module install puppetlabs-apt" "puppet module upgrade
+puppetlabs-apt"
+run_with_retry "puppet module install maestrodev-wget" "puppet module upgrade
+maestrodev-wget"
+run_with_retry "puppet module install puppetlabs-gcc" "puppet module upgrade
+puppetlabs-gcc"
+run_with_retry "puppet module install stankevich-python" "puppet module upgrade
+stankevich-python"
+
 print_msg "install puppet modules"
 
 export FACTER_oss_access_id=$OSS_ACCESS_ID

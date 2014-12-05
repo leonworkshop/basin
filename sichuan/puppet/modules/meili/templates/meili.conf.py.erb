@@ -124,3 +124,9 @@ EMEI_BLOB_INSTANCE_USER =  '<%= scope.lookupvar('meili::blob_user') %>'
 EMEI_BLOB_INSTANCE_PUBLIC =  '<%= scope.lookupvar('meili::blob_public') %>'
 EMEI_BLOB_USER_DOMAIN = '<%= scope.lookupvar('meili::blob_user_domain') %>'
 EMEI_BLOB_PUBLIC_DOMAIN = '<%= scope.lookupvar('meili::blob_public_domain') %>'
+
+
+################### Logging ####################
+LOGGING['handlers']['file']['level'] = '<%= scope.lookupvar('meili::log_level') %>'
+LOGGING['loggers']['meili']['level'] = '<%= scope.lookupvar('meili::log_level') %>'
+

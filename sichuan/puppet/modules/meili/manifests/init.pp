@@ -3,6 +3,8 @@
 class meili (
   $version                    = false,
 
+  $log_level                  = 'INFO',
+
   $redis_host                 = '127.0.0.1',
   $redis_port                 = 6379,
   $rds_host                   = 'rdsejmeynzn3yvu.mysql.rds.aliyuncs.com',

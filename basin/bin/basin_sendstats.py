@@ -43,16 +43,16 @@ valid_metrics = [{'name': 'deploy.server.state',
 def parseArguments():
   hostname = socket.gethostname()
 
-  parser = argparse.ArgumentParser(description="Shucaibao stats aggregate tool")
+  parser = argparse.ArgumentParser(description="shoowo stats aggregate tool")
   parser.add_argument('--verbose', action='store_true',
                       required=False,
                       help="Print out more debugging information")
   parser.add_argument('--console',
                       required=False, action='store_true',
                       help="Print out log to console")
-  parser.add_argument('--logfile', default='/var/log/shucaibao/stats_update.log',
+  parser.add_argument('--logfile', default='/var/log/shoowo/stats_update.log',
                       help="Logging file")
-  parser.add_argument('--server', default="tarim.internal.shucaibao.com",
+  parser.add_argument('--server', default="tarim.internal.shoowo.com",
                       help="Tarim server ip or domain name")
   parser.add_argument('--port', type=int, default=8125,
                       help="tarim server port to collect stats")
@@ -64,7 +64,7 @@ def parseArguments():
                       help="statistic metric name")
   parser.add_argument('--value', required=True,
                       help="value of the metric")
-  parser.add_argument('--pid', default="/opt/shucaibao/run/stats.pid",
+  parser.add_argument('--pid', default="/opt/shoowo/run/stats.pid",
                       help="Pid file path")
 
   args = parser.parse_args()
@@ -134,14 +134,14 @@ def send_stats_data(args, metric_name, metric_value, metric_type):
 
 
 def main():
-  pidfile = '/opt/shucaibao/run/stats.pid'
+  pidfile = '/opt/shoowo/run/stats.pid'
   try:
     (args, metric_def) = prepare()
     if args.pid is not None:
         pidfile = args.pid
     send_stats_data(args, metric_def['name'],
                     metric_def['value'], metric_def['type'])
-  except exp.ShucaibaoException as e:
+  except exp.ShoowoException as e:
     log.error("Error happens during stats aggregation: %s", e.message)
     raise e
   finally:

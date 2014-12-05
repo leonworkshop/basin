@@ -19,6 +19,13 @@ create_resources('nginx::resource::location', $nginx_locations)
 $es_instances = hiera('elasticsearch::instance', {})
 create_resources('elasticsearch::instance', $es_instances)
 
+# logstash resources
+$logstash_configs = hiera('logstash_configs', {})
+create_resources('logstash::configfile', $logstash_configs)
+
+logstash::configfile {'logstash_config':
+    content => template("logstash/logstash_to_es.conf.erb"),
+}
 
 # misc tarim configuration
 file { '/alidata1/graphite':

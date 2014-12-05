@@ -47,10 +47,11 @@ export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
 export PATH=$JAVA_HOME/bin:$PATH
 
 # install python virtualenv
-run_with_retry "/usr/local/bin/pip install --upgrade pip"
-run_with_retry "/usr/local/bin/pip install --upgrade virtualenv"
-run_with_retry "/usr/local/bin/pip install --upgrade statsd"
-run_with_retry "/usr/local/bin/pip install --upgrade pyyaml"
+PIP=`which pip`
+run_with_retry "$PIP install --upgrade pip"
+run_with_retry "$PIP install --upgrade virtualenv"
+run_with_retry "$PIP install --upgrade statsd"
+run_with_retry "$PIP install --upgrade pyyaml"
 
 # Install puppet
 pushd $HOME_DIR

@@ -97,7 +97,7 @@ print_msg "----------> Setup shoowo git repository <----------"
 # setup the git (clone from shoowo-cd server)
 cd $HOME_DIR/shoowo
 if [[ $DEBUG != "true" ]]; then
-  git checkout master
+  git checkout deploy
 fi
 git pull
 git config --global core.editor "vim"
@@ -110,7 +110,7 @@ print_msg "----------> Setup basin git repository <----------"
 # setup the git (clone from shoowo-cd server)
 cd $HOME_DIR/basin
 if [[ $DEBUG != "true" ]]; then
-  git checkout master
+  git checkout deploy
 fi
 git pull
 git config --global core.editor "vim"
@@ -122,7 +122,7 @@ print_msg "----------> Setup skeleton git repository <----------"
 # setup the git (clone from shoowo-cd server)
 cd $HOME_DIR/skeleton
 if [[ $DEBUG != "true" ]]; then
-  git checkout master
+  git checkout deploy
 fi
 git pull
 git config --global core.editor "vim"

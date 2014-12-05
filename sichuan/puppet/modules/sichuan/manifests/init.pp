@@ -70,14 +70,16 @@ class sichuan (
     ensure  => $service_ensure,
     command => "cd $home_dir/basin; git pull",
     user    => 'root',
-    minute  => '*/30',
+    hour    => '*/1',
+#    minute  => '*/30',
   }
 
   cron { 'skeleton-git-pull':
     ensure  => $service_ensure,
     command => "cd $home_dir/skeleton; git reset --hard origin/master; git pull",
     user    => 'root',
-    minute  => '*/30',
+    hour    => '*/1',
+#    minute  => '*/30',
   }
 
   # The CI git hook to trigger sichuan_apply
@@ -98,6 +100,8 @@ class sichuan (
 logger Merged new change \$1, do sichuan-apply
 /bin/bash /usr/local/bin/sichuan-apply
 /bin/bash /usr/local/bin/hosts-update
+logger Merged new change \$1, do service re-config
+/usr/bin/supervisorctl restart all
 ',
     mode    => '0755',
     require => File['/usr/local/bin/sichuan-apply', '/usr/local/bin/hosts-update']

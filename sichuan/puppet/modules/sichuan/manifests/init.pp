@@ -71,7 +71,7 @@ class sichuan (
     command => "cd $home_dir/basin; git pull",
     user    => 'root',
     hour    => '*/1',
-#    minute  => '*/30',
+    minute  => 'absent',
   }
 
   cron { 'skeleton-git-pull':
@@ -79,7 +79,7 @@ class sichuan (
     command => "cd $home_dir/skeleton; git reset --hard origin/master; git pull",
     user    => 'root',
     hour    => '*/1',
-#    minute  => '*/30',
+    minute  => 'absent',
   }
 
   # The CI git hook to trigger sichuan_apply

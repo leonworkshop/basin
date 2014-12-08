@@ -30,6 +30,7 @@ export FACTER_basin_dir=$FACTER_qaidam_root_dir/..
 export FACTER_oss_access_id=$OSS_ACCESS_ID
 export FACTER_oss_access_key=$OSS_ACCESS_KEY
 export FACTER_oss_host=$OSS_HOST
+export FACTER_fqdn=`hostname`
 
 if [[ $DEBUG != "true" ]]; then
     puppet apply --detailed-exitcodes --logdest syslog $PUPPETDIR/manifests/sites.pp --modulepath=$PUPPETDIR/modules:/etc/puppet/modules

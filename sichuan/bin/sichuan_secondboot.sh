@@ -58,6 +58,7 @@ popd
 print_msg "----------> apply the latest build bits <----------"
 # Apply the current puppet config
 PUPPETDIR=$HOME_DIR/basin/sichuan/puppet
+export FACTER_fqdn=`hostname`
 if [[ $DEBUG == "true" ]]; then
   puppet apply --detailed-exitcodes ${PUPPETDIR}/manifests/sites.pp --modulepath=${PUPPETDIR}/modules:/etc/puppet/modules
 else

@@ -87,6 +87,7 @@ def deploy_build(args, pmt_entry, pbt):
     # checkout the branch
     d_branch = pbt[phase]['branch']
     utils.run_command("cd " + args.shoowo_dir + ";git checkout " + d_branch)
+    utils.run_command("cd " + args.shoowo_dir + ";git pull origin " + d_branch)
 
     # if tag is speicifed, checkout that tag
     if 'tag' in pbt[phase]:
